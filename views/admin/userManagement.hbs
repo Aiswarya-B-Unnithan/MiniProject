@@ -1,0 +1,56 @@
+{{>adminheader}}
+
+   
+<link rel="stylesheet" href="/Bootstrap/customCss/userManagement.css">
+<div class="body mt-5">
+    <main class="table">
+        <section class="table__header">
+            <h1>Customer's Orders</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="/Bootstrap/images/search.png" alt="">
+            </div>
+            <div class="export__file">
+                <label for="export-file" class="export__file-btn" title="Export File"></label>
+                <input type="checkbox" id="export-file">
+                <div class="export__file-options">
+                    <label>Export As &nbsp; &#10140;</label>
+                    <label for="export-file" id="toPDF">PDF <img src="images/pdf.png" alt=""></label>
+                    <label for="export-file" id="toJSON">JSON <img src="images/json.png" alt=""></label>
+                    <label for="export-file" id="toCSV">CSV <img src="images/csv.png" alt=""></label>
+                    <label for="export-file" id="toEXCEL">EXCEL <img src="images/excel.png" alt=""></label>
+                </div>
+            </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Username <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Email <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Blocked <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Action <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {{#each users}}
+                    <tr>
+                        <td>{{this.username}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{#if this.blocked}}Blocked{{else}}Unblocked{{/if}}</td>
+                        <td> <form method="post" action="/admin/users/{{this._id}}/block">
+                                   <input type="hidden" name="blocked" value="{{this.blocked}}" />
+                                   <button type="submit">{{#if
+                                  this.blocked
+                             }}Unblock{{else}}Block{{/if}}</button>
+            </form></td>
+    
+                    </tr>
+                   {{/each}}
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="/Bootstrap/custonJsFiles/userManagement.js"></script>
+</div>
+{{>adminfooter}}

@@ -1,0 +1,78 @@
+<!-- views/admin/allOrders.hbs -->
+{{>adminheader}}
+
+<link rel="stylesheet" href="/Bootstrap/customCss/orderManagemnet.css">
+<div class="body">
+    <main class="table mt-5">
+        <section class="table__header">
+            <h1>Customer's Orders</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="/Bootstrap/images/search.png" alt="">
+            </div>
+            
+            
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Order ID <span class="icon-arrow">&UpArrow;</span></th>
+                        {{!-- <th> Items <span class="icon-arrow">&UpArrow;</span></th> --}}
+                        <th> Customer <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Total Price <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Delivering Address <span class="icon-arrow">&UpArrow;</span></th>
+                       
+                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                         <th>Order Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {{#each orders}}
+                    <tr>
+                        <td>{{customOrderID}} </td>
+                        {{!-- {{#each cartItems}}
+                        <td>{{this.product.productName}}</td>
+                        {{/each}} --}}
+                        <td> {{user.username}}</td>
+                        <td> ${{totalPrice}} </td>
+                        <td>
+            {{#if deliveringAddress}}
+              {{deliveringAddress.address1}},
+              {{deliveringAddress.city}},
+              {{deliveringAddress.state}}
+              -
+              {{deliveringAddress.postalCode}}
+            {{else}}
+              N/A
+            {{/if}}
+          </td>
+                        <td>
+                            <p class="status delivered">{{status}}</p>
+                        </td>
+                        <td> <strong>{{formatDate2 orderDate}}</strong></td>
+                       
+          <td><a href="/admin/UserOrders/changeStatus/{{_id}}">Change Status</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    
+    </div>
+    <nav aria-label="...">
+  <ul class="pagination pagination-sm justify-content-center">
+    {{#for 1 totalPages 1}}
+    <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
+      <a class="page-link" href="/admin/UserOrders/allOrders?page={{this}}">
+        {{this}}
+      </a>
+    </li>
+    {{/for}}
+  </ul>
+</nav>
+<script src="/Bootstrap/custonJsFiles/productManagement.js"></script>
+{{>adminfooter}}

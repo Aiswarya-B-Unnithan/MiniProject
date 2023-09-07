@@ -1,0 +1,185 @@
+<!-- editProduct.hbs -->
+{{>adminheader}}
+<style>
+  /* Style the checkbox container */
+.image-checkbox {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Hide the default checkbox */
+.image-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the custom checkbox */
+.image-checkbox label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 25px; /* Adjust as needed */
+}
+
+/* Style the "x" symbol */
+.image-checkbox label::before {
+  content: "x"; /* Display "x" symbol */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+/* Style the custom checkbox when checked */
+.image-checkbox input[type="checkbox"]:checked + label::before {
+  background-color: #f44336; /* Change to your desired color */
+  color: #fff;
+}
+.existing-images {
+    display: flex; /* Use flexbox for horizontal alignment */
+    align-items: center; /* Center images vertically */
+    gap: 10px; /* Add some spacing between images */
+    margin-top: 10px; /* Add margin as needed */
+
+</style>
+<div class="container w-50 mt-5">
+  <h1 style="margin-left: auto;margin-right:auto" class="mt-5">EDIT PRODUCT
+    DETAILS</h1>
+  <form
+    method="POST"
+    action="/admin/update-Product/{{product._id}}"
+    enctype="multipart/form-data"
+  >
+
+    <label for="name">Product Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      value="{{product.productName}}"
+      required
+    />
+    <label for="name">Product Price:</label>
+    <input
+      type="text"
+      id="price"
+      name="price"
+      class="form-control"
+      value="{{product.price}}"
+      required
+    /><label for="name">Product Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      class="form-control"
+      value="{{product.description}}"
+      required
+    />
+<label for="stock">Stock:</label>
+  <select name="stock" id="stock">
+    <option value="Instock" {{#if (eq product.stock "Instock")}}selected{{/if}}>Instock</option>
+    <option value="Out_of_Stock" {{#if (eq product.stock "Out_of_Stock")}}selected{{/if}}>Out_of_Stock</option>
+  </select>
+<label for="stock">Stock Value:</label>
+<input type="text" id="noOfStock" placeholder="Current Stock Value" name="noOfStock" value="{{product.ItemStock}}">
+
+
+    <select id="category" name="category" required>
+             {{!-- <option value="{{category._id}}">{{category.name}}</option> --}}
+
+      {{#each categories}}
+        <option value="{{this._id}}">{{name}}</option>
+      {{/each}}
+    </select>
+    <!-- Display existing images -->
+   <div class="existing-images">
+    {{#each product.images}}
+      <div class="image-checkbox">
+        <input type="checkbox" name="deleteImages[]" value="{{this}}" id="deleteImage{{@index}}" />
+        <label for="deleteImage{{@index}}"></label>
+        <img src="/{{this}}" style="width: 100px; height: 100px;" alt="Product Image" />
+      </div>
+    {{/each}}
+  </div>
+   
+
+    <div class="container m-5">
+      <div class="row">
+        <div class="col-md-12">
+          <input type="file" name="file" id="file" accept="image/*" multiple />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="cropperModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Upload Images</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &amp;times;
+            </button>
+          </div>
+
+          <input type="hidden" id="post_img_data" name="image_data_url" />
+          <div class="modal-body p-4" id="pre">
+            <div class="img-preview"></div>
+            <div id="galleryImages"></div>
+            <div id="cropper">
+              <canvas id="cropperImg" width="0" height="0"></canvas>
+              <button
+                type="button"
+                class="cropImageBtn btn btn-danger"
+                style="display: none"
+                id="cropImageBtn"
+              >
+                Crop
+              </button>
+            </div>
+            <div id="imageValidate" class="text-danger"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary sel">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Update Product</button>
+  </form>
+</div>
+{{>adminfooter}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.5/cropper.min.js"
+  integrity="sha512-E4KfIuQAc9ZX6zW1IUJROqxrBqJXPuEcDKP6XesMdu2OV4LW7pj8+gkkyx2y646xEV7yxocPbaTtk2LQIJewXw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.5/cropper.min.css"
+  integrity="sha512-Aix44jXZerxlqPbbSLJ03lEsUch9H/CmnNfWxShD6vJBbboR+rPdDXmKN+/QjISWT80D4wMjtM4Kx7+xkLVywQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<script src="/Bootstrap/script.js"></script>

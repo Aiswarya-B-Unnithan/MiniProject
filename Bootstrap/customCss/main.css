@@ -1,0 +1,109 @@
+.filter-condition {
+  padding: 15px;
+  height: 100px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.filter-condition select {
+  width: 120px;
+  padding: 0 0 0 10px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  color: purple;
+  background: transparent;
+  cursor: pointer;
+}
+.product-field {
+  padding: 40px 20px;
+}
+.product-field ul {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.product-field ul li {
+  list-style: none;
+  width: 23.4%;
+  height: 400px;
+  transition: 0.5s all;
+  /*overflow: hidden;*/
+  border-radius: 20px;
+  padding: 10px;
+  margin: 200px 10px 0 10px;
+  position: relative;
+}
+picture {
+  position: absolute;
+  right: 0;
+  bottom: 45%;
+  width: 75%;
+  height: 85%;
+
+  transform: skewY(40deg);
+}
+picture img {
+  width: 95%;
+  z-index: 1;
+  transform: skewY(-40deg);
+  padding: 25px 0 0 0;
+}
+.detail {
+  width: 100%;
+  height: 100%;
+}
+.detail .icon {
+  width: 30%;
+  height: 55%;
+  padding: 20px 5px;
+}
+.icon span {
+  background: white;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+  margin: 0 0 20px 5px;
+  font-size: 20px;
+  color: white;
+}
+.icon span:hover {
+  background: var(--gra);
+  cursor: pointer;
+}
+.detail > strong {
+  display: inherit;
+  margin: 20px;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: #555;
+}
+.detail > span {
+  display: inherit;
+  padding: 0 20px;
+  width: 80%;
+}
+.detail small {
+  display: inline-block;
+  padding: 8px 20px;
+  margin: 15px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.detail small:hover {
+  background: var(--gra);
+  color: white;
+  border-color: cyan;
+}
+li h4 {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  font-size: 30px;
+  color: #555;
+  text-shadow: 1px 1px 2px black;
+}

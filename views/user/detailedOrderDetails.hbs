@@ -1,0 +1,194 @@
+{{>userheader}}
+
+
+<!-- SweetAlert CSS -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+
+
+<style>
+  .gradient-custom {
+/* fallback for old browsers */
+background: #cd9cf2;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
+}
+</style>
+
+<p>{{message}}</p>
+<section class="gradient-custom">
+  {{#if returnValue}}
+  <h5 style="color: green;text-align:center" class="mt-4">Amount Returned Successfully To Your Wallet</h5>
+{{/if}}
+  <div class="container">
+  {{#if (not (or (eq order.status "delivered") (eq order.status "cancelled") (eq order.status "returned")(eq order.status "returning") 
+))}}
+  <form action="/order/cancel" method="post">
+    <input type="hidden" name="orderId" value="{{order._id}}" />
+     <a><button type="submit" class="btn btn-danger">Cancel Order</button></a> 
+  </form>
+  
+
+{{/if}}
+<!-- Show the return request button only if the order status is "delivered" -->
+{{#if (and (eq order.status "delivered") (lt (subtractDates currentParsedDate deliveryParsedDate) 1209600000))}}
+            <form action="/order/requestReturn" method="post">
+              <input type="hidden" name="orderId" value="{{order._id}}" />
+              <button type="submit" class="btn btn-warning mt-3 mb-2 ml-auto">Request Return</button>
+            </form>
+            {{/if}}
+ </div>
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;">{{user.username}}</span>!</h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
+              <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+            </div>
+            {{#each order.cartItems}}
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src="/{{this.product.images.[0]}}"
+                      class="img-fluid" alt="img">
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">{{this.product.productName}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Orginal MRP:₹ {{this.product.price}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Discount: ₹ {{this.product.offerPrice}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Qty: {{this.quantity}}</p>
+                  </div>
+                  
+                </div>
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                
+              </div>
+            </div>
+            {{/each}}
+            
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0">Order Details</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> ₹{{order.finalPrice}}</p>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0">Invoice Number : {{order.customOrderID}}</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Discount:</span>{{order.discountsOnMRP}}</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Invoice Date : {{formatDate order.orderDate}}</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Tax </span> 5% Of MRP</p>
+            </div>
+            <div class="d-flex justify-content-between">
+              
+              <p class="text-muted mb-0"><span>Order Status </span>{{order.status}}</p>
+            {{#if order.couponAmount}}
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Coupon Amount :</span> {{ order.couponAmount}}</p>
+{{/if}}
+            </div>
+
+            <div class="d-flex justify-content-between mb-5">
+              <p class="text-muted mb-0">Payment Method : {{order.paymentMethod}}</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+            </div>
+          </div>
+
+          {{#if order.deliveryDate}}
+                            <p class="mb-2">Delivered On: <span id="statuss">{{formatDate2 order.deliveryDate}}</span></p>
+{{/if}}
+ {{#if order.userOrderCancelDate}}
+                            <p class="mb-2">You Cancelled Order On : <span id="statuss">{{ formatDate2 order.userOrderCancelDate}}</span></p>
+{{/if}}    
+
+{{#if order.adminOrderCancelDate}}
+                            <p class="mb-2">Order Was Cancelled On : <span id="statuss">{{formatDate2 order.adminOrderCancelDate}}</span></p>
+{{/if}}    
+
+{{#if order.returnedDate}}
+                            <p class="mb-2">Order Was Returned On : <span id="statuss">{{formatDate2 order.returnedDate}}</span></p>
+{{/if}}  
+<div class="w-50 pl-4">
+              <h5 class="border-bottom mb-3">Delivery address</h5>
+              <p>{{order.deliveringAddress.email}}</p>
+              <p>{{order.deliveringAddress.address1}}</p>
+              <p>{{order.deliveringAddress.city}}</p>
+              <p>{{order.deliveringAddress.state}}</p>
+              <p>Pin:{{order.deliveringAddress.postalCode}}</p>
+            </div>
+          <div class="card-footer border-0 px-4 py-5"
+            style="background-color: #cc7c14; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <a href="/order/allOrders" style="color:white;font-size:larger;margin-right:10px">BACK TO ORDERS</a>
+            <a href="/order/invoice/{{order._id}}" style="color:white;font-size:larger">DOWNLOAD INVOICE</a>
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2">{{order.finalPrice}}</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<script>
+  const getInvoice = async (id) => {
+    console.log('script')
+    await fetch(`/order/get_invoice?id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/pdf'
+      }
+    })
+      .then(response => response.blob())
+      .then(blob => {
+        console.log(response)
+        // Create a URL for the downloaded file
+        const url = URL.createObjectURL(blob);
+
+        // Create a link element to trigger the download
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'invoice.pdf';
+
+        // Trigger the download
+        link.click();
+
+        // Clean up the URL object
+        URL.revokeObjectURL(url);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+
+{{>userfooter}}

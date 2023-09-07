@@ -1,0 +1,112 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.5/cropper.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.5/cropper.min.js"
+    ></script>
+    <style>
+      body { font-family: Arial, sans-serif; } .container { max-width: 600px;
+      margin: 0 auto; padding: 20px; } .card { padding: 20px; border: 1px solid
+      #ccc; border-radius: 5px; } .form-group { margin-bottom: 20px; } label {
+      font-weight: bold; } input[type="text"], textarea, select { width: 100%;
+      padding: 10px; border: 1px solid #ccc; border-radius: 5px; } select {
+      height: 40px; } .btn-primary { background-color: #007bff; border: none; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>Add Product</h2>
+        <p style="color: red">{{messageErr}}</p>
+        <p style="color: green">{{message}}</p>
+        <form
+          id="productForm"
+          action="/admin/add-product"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group">
+            <label for="name">Product Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" id="price" name="price" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="noOfStock">Stock Value</label>
+            <input type="text" id="noOfStock" name="noOfStock" />
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock</label>
+            <select id="stock" name="stock" required>
+              <option value="Instock">Instock</option>
+              <option value="Out_of_Stock">Out of Stock</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="" disabled selected>Select a category</option>
+              {{#each categories}}
+                <option value="{{this._id}}">{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="file">Upload Images</label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              accept="image/*"
+              multiple
+            />
+          </div>
+          <div id="deletedImageInputs"></div>
+          <!-- Image previews -->
+          <div id="imagePreviews" class="form-group"></div>
+          <input
+            type="hidden"
+            id="post_img_data"
+            name="post_img_data"
+            value=""
+          />
+
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/Bootstrap/script.js"></script>
+    <script src="/Bootstrap/custonJsFiles/previewImgDel.js"></script>
+  </body>
+</html>

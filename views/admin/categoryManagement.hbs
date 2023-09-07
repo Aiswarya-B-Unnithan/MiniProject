@@ -1,0 +1,47 @@
+{{>adminheader}}
+    {{! category-management.hbs }}
+
+    <h1 style="text-align:center" class="mt-5">Category Management</h1>
+
+    {{#if error}}
+      <p class="error">{{error}}</p>
+    {{/if}}
+
+    <h2 style="text-align:center">All Categories</h2>
+    <div style="text-align:center" class="mt-4">
+      <button class="btn btn-primary"><a href="/admin/add-categories">Add
+          Category</a>
+      </button>
+    </div>
+
+    <div class="conatiner w-50 mt-5" style="margin-left:auto;margin-right:auto">
+      <form action="" method="">
+        <table class="table table-hover table-bordered border-primary">
+          <thead class="table-light">
+            <tr>
+              <th>CategoryName</th>
+              <th>Description</th>
+              <th colspan="2">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {{#each categories}}
+              <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td><button class="btn btn-success"><a
+                      href="/admin/update-Category/{{_id}}"
+                    >UPDATE</a></button></td>
+                <td><button class="btn btn-danger"><a
+                      href="/admin/delete-Category/{{_id}}"
+                    >DELETE</a></button></td>
+
+              </tr>
+            {{/each}}
+
+          </tbody>
+        </table>
+      </form>
+    </div>
+  {{>adminfooter}}

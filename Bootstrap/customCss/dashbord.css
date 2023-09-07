@@ -1,0 +1,89 @@
+body {
+  background-color: #a2dfe0;
+}
+
+/* .dashbord {
+} */
+
+.card {
+  background-color: #c1e8ed;
+  width: 400px;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+.inner-card {
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.heart {
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #beb4aa;
+  border-radius: 50%;
+  background-color: #eee;
+}
+
+.btn:focus {
+  color: #fff;
+  background-color: #025ce2;
+  border-color: #0257d5;
+  box-shadow: none;
+}
+.proname {
+  text-decoration: none;
+}
+/* Add margin to the card elements */
+.card {
+  margin-left: 10px; /* Adjust the value as needed */
+}
+
+/* Optional: Add some padding to the card body */
+.card-body {
+  padding: 10px; /* Adjust the value as needed */
+}
+/* Add margin to the column elements */
+.col-md-3 {
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+/* Add custom styling to the sorting buttons */
+#sortingButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+.tag {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 500;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  padding: 0 0.4rem;
+}
+.bg-red {
+  background-color: #bb3535;
+  color: #fff;
+}
+#lowToHighSort,
+#highToLowSort {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-left: 10px; /* Add some space between the buttons */
+  cursor: pointer;
+}
+
+#lowToHighSort:hover,
+#highToLowSort:hover {
+  background-color: #0056b3;
+}

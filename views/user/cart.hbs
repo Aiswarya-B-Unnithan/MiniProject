@@ -1,0 +1,279 @@
+<!-- views/user/cart.hbs -->
+{{>userheader}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	{{!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script> --}}
+
+{{log mainImages}}
+
+
+<p>{{message}}</p>
+
+	
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="blog-single.html">Cart</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
+			
+	<!-- Shopping Cart -->
+	<div class="shopping-cart section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<!-- Shopping Summery -->
+            {{#if cartValue}}
+					<table class="table shopping-summery bg-black">
+						<thead>
+							<tr class="main-hading">
+								<th>PRODUCT</th>
+								<th>NAME</th>
+								<th class="text-center">UNIT PRICE</th>
+								<th class="text-center">QUANTITY</th>
+								<th class="text-center">TOTAL</th> 
+								<th class="text-center"></th>
+                <th class="text-center"></th> <th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+                 {{#each mainImages}}
+							<tr>
+								<td class="image" data-title="No">
+									
+									<img src="/{{this}}" alt="img">
+									</td>
+								{{#with (lookup ../cart.items @index)}}
+								<td class="product-des" data-title="Description">
+									<p class="product-name"><a href="/product/{{this._id}}">{{this.product.productName}}</a></p>
+									<p class="product-des">{{this.product.description}}</p>
+								</td>
+								<td class="price" data-title="Price"><span>₹{{this.product.price}}</span></td>
+								<td>
+              <button
+                class="quantity-button"
+                data-action="decrease"
+                data-productid="{{this.product._id}}"
+              >
+                -
+              </button>
+              <span class="quantity" data-productid="{{this.product._id}}">
+                {{this.quantity}}
+              </span>
+              <button
+                class="quantity-button"
+                data-action="increase"
+				data-stock="{{this.product.ItemStock}}"
+                data-productid="{{this.product._id}}"
+              >
+                +
+              </button>
+			  <td></td>
+            </td>
+								<td class="total-amount" data-title="Total"><span>₹{{multiply this.product.price this.quantity}}</span></td>
+									<td></td>
+                  <td>
+              <button
+                class="delete-button btn btn-danger"
+                data-productid="{{this.product._id}}"
+              ><i class="ti-trash remove-icon"></i>
+               
+              </button>
+            </td>
+                
+					 {{/with}}		
+              </tr>
+							  {{/each}}
+                <tr>
+          <td colspan="6" style="text-align: right;">
+            <strong>Total MRP:</strong>
+          </td>
+          <td><strong>₹{{totalAmountWithOutDiscount}}</strong></td>
+		  
+        </tr>
+		<tr>
+          <td colspan="6" style="text-align: right;">
+            <strong>Discount on  MRP:</strong>
+          </td>
+          <td><strong>₹{{totalPrice}}</strong></td>
+		  <input type="hidden" name="subTotal" value="{{totalPrice}}" id="subTotal">
+        </tr>
+		<tr>
+          <td colspan="6" style="text-align: right;">
+            <strong>Coupon Discount:</strong>
+          </td>
+          <td><div class="card p-2">
+     
+      <div class="text-center m-2" style="color: red;" id="couponMsg"></div>
+      <p class="text-center m-2" style="color: green;" id="sCouponMsg"></p>
+
+      <!-- Available coupons -->
+ <div class="coupon-section">
+         <details>
+          <summary>Available coupons</summary>
+          <div class="available-coupons">
+            {{#each availableCoupons}}
+            <div class="coupon-option">
+             <input
+  type="radio"
+  name="selectedCoupon"
+  value="{{this.code}}"
+  data-discount="{{this.discountValue}}"
+  onchange="updateDiscountedTotal()"
+>
+              <label>{{this.code}} - Get {{this.discountValue}}₹ discount</label>
+            </div>
+            {{else}}
+            <h6 class="mb-3">No coupon available</h6>
+            {{/each}}
+          </div>
+        </details>
+      </div>
+     <button class="btn" style="display:none">Check</button>
+
+	 
+	 
+ <span id="discountedTotalDisplay" style="display: none;"></span>
+
+
+    </div>
+	</td>
+		  
+        </tr>
+		
+		<tr>
+    <td colspan="6" style="text-align: right;">
+        <strong>Tax Amount:</strong>
+    </td>
+    <td id="taxAmount"><strong>₹ {{taxAmount}}</strong></td>
+</tr>
+<tr>
+    <td colspan="6" style="text-align: right;">
+        <strong>Total Amount:</strong>
+    </td>
+    <td id="totalAmountWithTax"><strong>₹ {{totalAmountWithTax}}</strong></td>
+</tr>
+						</tbody>
+					</table>
+			<button type="button" class="proceed-button btn btn-primary"><a href="/">Continue Shopping</a></button> 
+
+          <button class="proceed-button btn btn-primary" id="proceedToBuyButton">
+  <a id="proceedToBuyLink">Proceed to Buy</a>
+</button>
+
+  {{else}}
+    <p style="text-align: center;color:red">Your cart is empty</p>
+    <div style="text-align: center;" class="mt-4">
+      <button class="btn btn-primary"><a href="/">Back To Home</a></button>
+    </div>
+  {{/if}}
+					<!--/ End Shopping Summery -->
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+  <script>
+  let selectedCoupon = '';
+  let selCouponValue = 0;
+  let subTotal = {{totalPrice}};
+  let discountPercent = 0;
+  let totalAmountWithTax = {{totalAmountWithTax}};
+let discountOnMRP={{totalPrice}}
+  // Function to calculate and update discounted total
+  function updateDiscountedTotal() {
+    selectedCoupon = document.querySelector('input[name="selectedCoupon"]:checked');
+    if (selectedCoupon) {
+      selCouponValue = selectedCoupon.value;
+      discountPercent = parseInt(selectedCoupon.getAttribute('data-discount'));
+      subTotal = parseFloat(document.getElementById('subTotal').value);
+      discountedTotal = subTotal - discountPercent;
+      totalAmountWithTax = discountedTotal + parseFloat(document.getElementById('taxAmount').textContent.split('₹ ')[1]);
+      // Show the discounted total display
+      document.getElementById('discountedTotalDisplay').style.display = 'block';
+    } else {
+      discountPercent = 0;
+      selCouponValue = 0;
+      discountedTotal = subTotal;
+      totalAmountWithTax = discountedTotal + parseFloat(document.getElementById('taxAmount').textContent.split('₹ ')[1]);
+       // Hide the discounted total display
+      document.getElementById('discountedTotalDisplay').style.display = 'none';
+    }
+
+    // Update displayed values
+    document.getElementById('discountedTotalDisplay').textContent = `Discounted Total: ₹ ${discountedTotal.toFixed(2)}`;
+    document.getElementById('totalAmountWithTax').textContent = `₹ ${totalAmountWithTax.toFixed(2)}`;
+    updateProceedToBuyLink();
+  }
+
+  // Function to update Proceed to Buy link
+  function updateProceedToBuyLink() {
+    const proceedToBuyButton = document.getElementById('proceedToBuyButton');
+    const proceedToBuyLink = document.getElementById('proceedToBuyLink');
+    proceedToBuyLink.href = `/address/checkout?totalAmountWithTax=${totalAmountWithTax}&discountPercent=${discountPercent}&selectedCoupon=${selCouponValue}&discountOnMRP=${discountOnMRP}`;
+    proceedToBuyButton.disabled = false; // Enable the button
+  }
+
+  // Initialize values
+  updateDiscountedTotal();
+</script>
+
+	<!--/ End Shopping Cart -->
+			{{>userfooter}}
+	
+	
+	
+
+	<!-- Add this line to include the jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- JavaScript to handle quantity changes, delete button clicks, and the Proceed to Buy button goes here -->
+<script src="/Bootstrap/cartScript.js"></script>
+	
+	<!-- Jquery -->
+    <script src="/Bootstrap/js/jquery.min.js"></script>
+    <script src="/Bootstrap/js/jquery-migrate-3.0.0.js"></script>
+	<script src="/Bootstrap/js/jquery-ui.min.js"></script>
+	<!-- Popper JS -->
+	<script src="/Bootstrap/js/popper.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="/Bootstrap/js/bootstrap.min.js"></script>
+	<!-- Color JS -->
+	<script src="/Bootstrap/js/colors.js"></script>
+	<!-- Slicknav JS -->
+	<script src="/Bootstrap/js/slicknav.min.js"></script>
+	<!-- Owl Carousel JS -->
+	<script src="/Bootstrap/js/owl-carousel.js"></script>
+	<!-- Magnific Popup JS -->
+	<script src="/Bootstrap/js/magnific-popup.js"></script>
+	<!-- Fancybox JS -->
+	<script src="/Bootstrap/js/facnybox.min.js"></script>
+	<!-- Waypoints JS -->
+	<script src="/Bootstrap/js/waypoints.min.js"></script>
+	<!-- Countdown JS -->
+	<script src="/Bootstrap/js/finalcountdown.min.js"></script>
+	<!-- Nice Select JS -->
+	<script src="js/nicesellect.js"></script>
+	<!-- Ytplayer JS -->
+	<script src="/Bootstrap/js/ytplayer.min.js"></script>
+	<!-- Flex Slider JS -->
+	<script src="/Bootstrap/js/flex-slider.js"></script>
+	<!-- ScrollUp JS -->
+	<script src="/Bootstrap/js/scrollup.js"></script>
+	<!-- Onepage Nav JS -->
+	<script src="/Bootstrap/js/onepage-nav.min.js"></script>
+	<!-- Easing JS -->
+	<script src="/Bootstrap/js/easing.js"></script>
+	<!-- Active JS -->
+	<script src="/Bootstrap/js/active.js"></script>

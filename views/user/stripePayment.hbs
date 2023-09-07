@@ -1,0 +1,128 @@
+{{>userheader}}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/Bootstrap/customCss/payment.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css"
+    ></script>
+  </head>
+  <body>
+    <div class="padding">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <strong>PAYMENT INFORMATION</strong>
+              <small></small>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+
+                    <label for="name">Name</label>
+                    <input
+                      class="form-control"
+                      id="name"
+                      type="text"
+                      value="{{user.username}}"
+                      placeholder="Enter your name"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="ccnumber">Total amount due</label>
+
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        type="text"
+                        
+                        value="₹{{discountedTotal}}"
+                        
+                        disabled
+                      />
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+ 
+              </div>
+
+            </div>
+            <div class="card-footer">
+
+
+<form action="/stripe/onlinePayment" method="POST">
+<script>
+  // Assuming discountedTotal is in rupees (e.g., 19.45)
+  var discountedTotal = parseFloat("{{discountedTotal}}");
+
+  // Convert rupees to paise
+  const discountedTotalPaise = Math.round(discountedTotal * 100);
+
+  // Now, you can use discountedTotalPaise as the amount to send to Stripe
+  console.log(`Amount in paise: ${discountedTotalPaise}`);
+</script>
+
+<script
+  src="https://checkout.stripe.com/checkout.js"
+  class="stripe-button"
+  data-key="pk_test_51NelB1IcIHe4CKYvlry0vgIjnRjbLi0KLB82SXxZXxCQXkyT1ox3GsUxfEzEBi340bJMs8tuf16zhrF7V5Fbi9M200iyzeum3q"
+  data-amount="{{ discountedTotalPaise }}"
+  data-name="Eshop"
+  data-description="EShop Online Payment"
+  data-image="D:\PROJECTS\projectwee2\CaseU6\Bootstrap\images\logo2.png"
+  data-locale="auto"
+>
+</script>
+
+<script>
+  // Hide default stripe button
+  document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+</script>
+
+<div class="d-flex justify-content-between align-items-center pb-1">
+  <a href="/address/confirmation" class="text-muted">Go back</a>
+  <button type="submit" class="btn btn-primary btn-lg">Pay amount</button>
+</div>
+<input type="hidden" name="discountedTotal" value="{{discountedTotal}}" />
+<input type="hidden" name="paymentMethod" value="{{paymentMethod}}" />
+<input type="hidden" name="CouponDiscountAmount" value="{{couponDiscountAmount}}" />
+<input type="hidden" name="cartTotal" value="{{cartTotal}}" />
+</form>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+{{>userfooter}}

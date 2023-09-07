@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/Bootstrap/customCss/loginSignup.css" />
+<section class="main-section">
+  <div class="container">
+    <div class="user signinbox">
+      <div class="imagebox">
+        <img src="https://i.imgur.com/kPlWgwj.jpg" />
+      </div>
+      <div class="formbox">
+        <div class="form">
+          <h2> Admin Signin</h2>
+          <form method="post" action="/admin/login">
+            <input
+              type="text"
+              placeholder="Name"
+              id="name"
+              name="username"
+              class="form-control"
+              required
+              autofocus=""
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="inputPassword"
+              name="password"
+              class="form-control"
+              required
+            />
+            <input type="submit" value="Login" />
+            <p class="mt-5 mb-3 text-muted">Forgot your password?</p>
+            <div>
+              <p style="color: red;">{{message}}</p>
+            </div>
+            <div>
+              <p style="color:red;">{{message2}}</p>
+            </div>
+            <div>
+              <p style="color: red;">{{message3}}</p>
+            </div>
+            <a href="/forgot-password">Forget Password? </a>
+            <br />
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

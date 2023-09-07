@@ -1,0 +1,67 @@
+<!-- views/user/address.hbs -->
+{{>userheader}}
+  <p class="error">{{error}}</p>
+
+<h1 style="text-align:center;" class="mt-5">Your Addresses</h1>
+<div class="container h-100 mt-5">
+  <form id="addressForm">
+    {{#if addresses.length}}
+      <div class="list-group">
+        {{#each addresses}}
+          <label class="list-group-item d-flex gap-2">
+            <input
+              class="form-check-input flex-shrink-0 address-radio"
+              type="radio"
+              name="selectedAddress"
+              value="{{this._id}}"
+            />
+            <span>
+              Address
+              <small class="d-block text-body-secondary">{{email}}</small>
+              <small class="d-block text-body-secondary">{{address1}}</small>
+              <small class="d-block text-body-secondary">{{address2}}</small>
+              <small class="d-block text-body-secondary">{{city}}</small>
+              <small class="d-block text-body-secondary">{{state}}</small>
+              <small class="d-block text-body-secondary">{{pincode}}</small>
+            </span>
+          </label>
+        {{/each}}
+      </div>
+      <!-- Add a button for adding a new address -->
+      {{#if fromCart}}
+        <button class="add-address-button btn btn-primary"><a
+            href="/address/addAddress"
+          >Add New Addresss</a></button>
+        <!-- Add a button for proceeding to pay -->
+        <button class="btn btn-success proceed-button">Proceed to Pay</button>
+      {{else}}
+        <!-- Add a button for adding a new address -->
+        <button
+          class="add-address-button btn btn-primary"
+          style="margin-left: auto;margin-right:auto"
+        >
+          <a href="/address/add-New-Address">Add New Address</a></button>
+      {{/if}}
+    {{else}}
+      <div class="container w-50">
+        <h3 style="text-align: center;">No addresses found. Please add a new
+          address.</h3>
+      </div>
+      <div class="container w-70">
+        <button
+          class="btn btn-primary"
+          style="margin-left:auto;margin-right:auto"
+        >
+          <a
+            style="margin-left: auto;margin-right:auto"
+            href="/address/add-New-Address"
+          >Add New Address</a></button>
+      </div>
+    {{/if}}
+  </form>
+</div>
+{{>userfooter}}
+<!-- Add this line to include the jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- JavaScript to handle selecting an address and adding a new address -->
+<script src="/Bootstrap/addressScript.js"></script>

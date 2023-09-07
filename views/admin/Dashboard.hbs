@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  {{log notifications}}
+  <style>
+    
+    /* Style for the report container */
+  #reportContainer {
+    display: block; /* Make the div visible */
+    width: 100%; /* Set the width to 100% */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #ffffff; /* Set background color */
+    border: 1px solid #cccccc; /* Add a border */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow */
+    margin-top: 20px; /* Adjust margin as needed */
+     position: relative; /* or position: absolute; */
+  z-index: 999; /* Adjust this value as needed */
+  }
+
+.modal {
+  display: none; /* Hide the modal by default */
+  position: fixed; /* Fixed position so it stays in the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+  z-index: 9999; /* A high z-index to ensure it's on top of other content */
+  overflow: auto; /* Enable scrolling when the content is too long */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  max-width: 80%; /* Limit the maximum width of the modal content */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+}
+
+/* Close button hover effect */
+.close:hover {
+  color: #555;
+}
+/* Add this CSS to your stylesheet */
+.report-table {
+  width: 100%;
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+  margin-top: 20px; /* Add some spacing above the table */
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd; /* Add borders to cells */
+  padding: 8px; /* Add some padding to cells */
+  text-align: center; /* Center align text in cells */
+}
+
+.report-table th {
+  background-color: #f2f2f2; /* Gray background for header cells */
+}
+
+.report-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate row background color */
+}
+
+.report-table tr:hover {
+  background-color: #ddd; /* Highlight rows on hover */
+}
+.table-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+  
+  /* Ensure it takes the full viewport height */
+}
+
+
+</style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="/Bootstrap/assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script src="/Bootstrap/custonJsFiles/cahrt.js"></script>
+  </head>
+  <body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="icon">
+
+              </span>
+              <span class="title">Eshop</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              <span class="title">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <li>
+  <a href="/admin/salesReport/productSalesReport" id="salesReportLink">
+    <span class="icon">
+      <ion-icon name="book-outline"></ion-icon>
+    </span>
+    <span class="title">Sales Report</span>
+  </a>
+</li>
+
+          </li>
+<li>
+            <a href="/admin/banner/addBanner">
+              <span class="icon">
+                <ion-icon name="image-outline"></ion-icon>
+              </span>
+              <span class="title">Add Banner</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/users">
+              <span class="icon">
+                <ion-icon name="people-outline"></ion-icon>
+              </span>
+              <span class="title">User Management</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/admin/products">
+              <span class="icon">
+                <ion-icon name="cube-outline"></ion-icon>
+              </span>
+              <span class="title">Product Management</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/admin/categories">
+              <span class="icon">
+                <ion-icon name="copy-outline"></ion-icon>
+              </span>
+              <span class="title">Category Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/viewOffers">
+              <span class="icon">
+                <ion-icon name="copy-outline"></ion-icon>
+              </span>
+              <span class="title">Offer Management</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/admin/UserOrders/allOrders">
+              <span class="icon">
+                <ion-icon name="gift-outline"></ion-icon>
+              </span>
+              <span class="title">Order Management</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/admin/viewCoupon">
+              <span class="icon">
+                <ion-icon name="ticket-outline"></ion-icon>
+              </span>
+              <span class="title">Coupon Management</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/admin/logout">
+              <span class="icon">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span class="title">Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================= Main ==================== -->
+      <div class="main">
+        <div class="topbar">
+          <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+          </div>
+
+          <div class="search" style="visibility:hidden">
+            <label>
+              <input type="text" placeholder="Search here" />
+              <ion-icon name="search-outline"></ion-icon>
+            </label>
+          </div>
+
+          <!-- Notification icon -->
+          <div id="notificationIcon" style="cursor: pointer;">
+            <img
+              src="https://cdn1.iconfinder.com/data/icons/facebook-social-media-set/142/facebook_bell-512.png"
+              alt="Notification Icon"
+              width="30"
+              height="30"
+            />
+            <span
+              id="notificationCount"
+              style="color:red;width:20px;height:20px"
+            >{{notifications}}</span>
+          </div>
+
+          <!-- Notification dropdown/modal -->
+          <div id="notificationModal" style="display: none;">
+            <h2>Notifications</h2>
+            <ul id="notificationList">
+              <!-- Notifications will be populated here using AJAX -->
+            </ul>
+          </div>
+
+          <div class="user">
+            <img
+              src="https://th.bing.com/th/id/R.5ca7598094fd31a541a980e0fb9265be?rik=8H511p0Yxl6XuQ&riu=http%3a%2f%2fsns-hub.com%2fimg%2fadmin.png&ehk=Bcj%2bQJpMZE7Bt2Rz2KZKYatrWYry%2bcS7NZy5JYlAkMc%3d&risl=&pid=ImgRaw&r=0"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <!-- ======================= Cards ================== -->
+        <div class="cardBox mt 700">
+          <div class="card">
+            <div>
+              <div class="numbers">{{TotalCustomers}}</div>
+              <div class="cardName">Total Customers</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="numbers">{{orderCount}}</div>
+              <div class="cardName">Sales</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="cart-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="numbers">{{categoryCount}}</div>
+              <div class="cardName">No Of Categories</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="file-tray-stacked-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="numbers">₹{{totalEarnings}}</div>
+              <div class="cardName">Earning</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="cash-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+ <!-- ================ Add Charts JS ================= -->
+            <div class="chartsBx">
+                 <div class="chart"> <canvas id="chart-1" width="400" height="400"></canvas></div>
+                <div class="chart"> <canvas id="chart-2"></canvas> </div>
+            </div>
+
+          
+          
+
+        <!-- ================ Order Details List ================= -->
+        <div class="details">
+          <div class="recentOrders">
+            <div class="cardHeader">
+              <h2>Recent Orders</h2>
+              <a href="/admin/UserOrders/allOrders" class="btn">View All</a>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <td>Name</td>
+                  <td>Price</td>
+                  <td>Order Date</td>
+                  <td>Payment</td>
+                  <td>Status</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                {{#each allOrders}}
+                  <tr>
+                    <td>{{this.user.username}}</td>
+                    <td>${{this.totalPrice}}</td>
+                    <td>{{formatDate2 this.orderDate}}</td>
+                    <td>Paid</td>
+                    <td><span
+                        class="status delivered"
+                      >{{this.status}}</span></td>
+                  </tr>
+
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ================= New Customers ================ -->
+          <div class="recentCustomers">
+            <div class="cardHeader">
+              <h2>Recent Customers</h2>
+            </div>
+
+            <table>
+              {{#each allUsers}}
+                <tr>
+                  <td width="60px">
+                    <div class="imgBx"><img
+                        src="/{{this.profilePictureUrl}}"
+                        alt="propic"
+                      /></div>
+                  </td>
+                  <td>
+                    <h4>{{this.username}} <br /> <span></span></h4>
+                  </td>
+                </tr>
+
+              {{/each}}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Report Container -->
+      <div id="reportContainer" class="table-container" style="display:none">
+        <button id="closeReportBtn">Close</button>
+      </div>
+<div id="salesReportModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Select Sales Report Date</h2>
+    
+    <!-- Add the dropdown for selecting report type -->
+    <label for="reportTypeSelect">Select Report Type:</label>
+    <select id="reportTypeSelect">
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+
+    <form id="salesReportForm">
+      <!-- Date Selection -->
+      <label for="reportDate">Select Date:</label>
+      <input type="date" id="reportDate" name="reportDate"><br>
+
+      <!-- Week Selection -->
+      <label for="reportWeekStart">Select Week:</label>
+      <input type="date" id="reportWeekStart" name="reportWeekStart">
+      <span>to</span>
+      <input type="date" id="reportWeekEnd" name="reportWeekEnd"><br>
+
+      <!-- Month Selection -->
+      <label for="reportMonth">Select Month:</label>
+      <input type="month" id="reportMonth" name="reportMonth"><br>
+
+      <!-- Year Selection -->
+      <label for="reportYear">Select Year:</label>
+      <input type="number" id="reportYear" name="reportYear"><br>
+      
+      
+      
+      <!-- Submit Button -->
+      <input type="submit" id="generateReportBtn" value="Generate Report">
+      <a href="/admin/salesReport/productSalesReport">All Sales Report</a>
+    </form>
+  </div>
+</div>
+
+
+    <!-- =========== Scripts =========  -->
+    <script src="/Bootstrap/custonJsFiles/dashboardAdminMain.js"></script>
+
+
+
+    <!-- ====== ionicons ======= -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="/Bootstrap/custonJsFiles/notification.js">
+
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+const modal = document.getElementById("salesReportModal");
+console.log("modal",modal)
+const reportDiv=document.getElementById("reportContainer")
+const salesReportLink = document.getElementById("salesReportLink"); // Reference the link
+const closeModal = document.getElementById("closeModal");
+let adminChoice = "";
+// JavaScript code to handle the form submission and report generation
+const salesReportForm = document.getElementById("salesReportForm");
+
+salesReportForm.addEventListener("submit", (e) => {
+  e.preventDefault(); // Prevent the form from submitting normally
+
+  // Retrieve the selected date/week/month/year from the form fields
+  const selectedDate = document.getElementById("reportDate").value;
+  console.log("selectedDate1",selectedDate)
+  const selectedWeekStart = document.getElementById("reportWeekStart").value;
+  const selectedWeekEnd = document.getElementById("reportWeekEnd").value;
+  const selectedMonth = document.getElementById("reportMonth").value;
+  console.log("selectedMonth",selectedMonth)
+  const selectedYear = document.getElementById("reportYear").value;
+
+  // Perform actions to generate the sales report based on the selected criteria
+
+  // Close the modal after generating the report
+  modal.style.display = "none";
+});
+
+
+
+// Add an event listener to the "Generate Report" button
+const generateReportBtn = document.getElementById("generateReportBtn"); // Add this line
+generateReportBtn.addEventListener("click", () => {
+  // Get the selected report type from the dropdown
+  adminChoice = reportTypeSelect.value;
+
+  
+ const selectedReportType = reportTypeSelect.value;
+  const selectedDate = document.getElementById("reportDate").value;
+  const weekStart = document.getElementById("reportWeekStart").value;
+  const weekEnd = document.getElementById("reportWeekEnd").value;
+  const selectedMonth = document.getElementById("reportMonth").value;
+  const selectedYear = document.getElementById("reportYear").value;
+
+
+  if (adminChoice === "daily") {
+    fetchDailyReport(selectedDate);
+  } else if (adminChoice === "monthly") {
+    fetchMonthlyReport(selectedMonth); 
+  } else if (adminChoice === "weekly") {
+    fetchWeeklyReport(weekStart, weekEnd);
+  } else if (adminChoice === "yearly") {
+    fetchYearlyReport(selectedYear);
+  } else {
+    
+    
+    console.error("Invalid report choice.");
+  }
+  reportDiv.style.display='block'
+});
+
+salesReportLink.addEventListener("click", (e) => {
+  e.preventDefault(); 
+  console.log("hello")
+  modal.style.display = "block"; 
+});
+
+// Hide the modal when the close button is clicked
+closeModal.addEventListener("click", () => {
+ modal.style.display = "none";  
+});
+
+// Hide the modal when the user clicks outside of it
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+
+ });
+
+
+
+
+
+// Function to create and display the daily report table
+function displayDailyReportTable(reportData) {
+  const reportContainer = document.getElementById("reportContainer");
+  if (!reportContainer) {
+    console.error("Report container not found.");
+    return;
+  }
+
+  // Clear the report container
+  reportContainer.innerHTML = "";
+
+  if (!reportData || !reportData.orders || reportData.orders.length === 0) {
+    console.log("No data available for the selected date.");
+    return;
+  }
+
+  // Create the close button
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "Close";
+  closeBtn.addEventListener("click", () => {
+    // When the close button is clicked, clear the report container
+    reportContainer.innerHTML = "";
+  });
+
+  // Append the close button to the report container
+  reportContainer.appendChild(closeBtn);
+
+  // Create the sales report table
+  const salesReportTable = document.createElement("table");
+  salesReportTable.className = "report-table"; 
+  
+
+  // Create the table header for the sales report
+  const salesReportThead = salesReportTable.createTHead();
+  const salesReportHeaderRow = salesReportThead.insertRow();
+  const salesReportHeaders = [
+  "OrderDate",
+    "ID",
+    "MRP",
+    "Final Amount Paid",
+    "DiscountOnMRP",
+    "Coupon Amount",
+    "Tax Percentage (Orginal MRP)",
+    "Status",
+  ]; // Replace with actual headers
+
+  salesReportHeaders.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    salesReportHeaderRow.appendChild(th);
+  });
+
+  // Create the table body for the sales report
+  const salesReportTbody = salesReportTable.createTBody();
+
+  // Populate the table rows with data from the reportData
+  reportData.orders.forEach((order) => {
+    const date = new Date(order.orderDate);
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short', // Use 'long' for full month name, 'short' for abbreviated
+  day: 'numeric',
+});
+    const row = salesReportTbody.insertRow();
+     row.insertCell(0).textContent =formattedDate;
+    row.insertCell(1).textContent = order.customOrderID;
+    row.insertCell(2).textContent = `₹${order.totalPrice}`;
+    row.insertCell(3).textContent = `₹${order.finalPrice.toFixed(2)}`;
+    row.insertCell(4).textContent = `₹${order.discountsOnMRP}`;
+    row.insertCell(5).textContent = `₹${order.couponAmount}`;
+    row.insertCell(6).textContent = `${order.taxPercentage}%`;
+    row.insertCell(7).textContent = order.status;
+  });
+
+  // Append the sales report table to the report container
+  reportContainer.appendChild(salesReportTable);
+salesReportTable.style.marginBottom = "30px";
+  // Display the category revenue table
+  const categoryRevenue = reportData.categoryRevenue;
+  const categoryRevenueTable = document.createElement("table");
+  categoryRevenueTable.className = "category-revenue-table"; // Add CSS class for styling
+
+  // Create the table header for category revenue
+  const categoryRevenueThead = categoryRevenueTable.createTHead();
+  const categoryRevenueHeaderRow = categoryRevenueThead.insertRow();
+  const categoryRevenueHeaders = ["Category", "Revenue"];
+
+  categoryRevenueHeaders.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    categoryRevenueHeaderRow.appendChild(th);
+  });
+
+  
+  // Create the table body for category revenue
+const categoryRevenueTbody = categoryRevenueTable.createTBody();
+
+// Apply CSS styles for categoryRevenueTable (add borders)
+categoryRevenueTable.style.borderCollapse = "collapse";
+categoryRevenueTable.style.border = "1px solid #000"; // Set border style
+
+// Define CSS styles for different revenue ranges (you can customize this)
+const revenueStyles = {
+  low: "background-color: #ff9999; font-weight: bold;",
+  medium: "background-color: #ffcc99; font-weight: bold;",
+  high: "background-color: #99ff99; font-weight: bold;",
+};
+// Add a CSS style to set the width for the table
+categoryRevenueTable.style.width = "50%";
+categoryRevenueTable.className = "report-table"; 
+// Populate the table rows with category revenue data
+for (const category in categoryRevenue) {
+  const row = categoryRevenueTbody.insertRow();
+  row.insertCell(0).textContent = category;
+  const revenue = categoryRevenue[category];
+  row.insertCell(1).textContent = `₹${revenue}`;
+
+  // Apply styles based on revenue ranges
+  if (revenue < 5000) {
+    row.style.cssText = revenueStyles.low;
+  } else if (revenue < 10000) {
+    row.style.cssText = revenueStyles.medium;
+  } else {
+    row.style.cssText = revenueStyles.high;
+  }
+
+  // Apply CSS styles to the row to set borders
+  row.style.border = "1px solid #000"; // Set border style for rows
+  row.style.borderTop = "none"; // Remove top border for the first row
+}
+
+// Apply CSS styles to the header row to set borders
+categoryRevenueHeaderRow.style.border = "1px solid #000"; // Set border style for header row
+categoryRevenueHeaderRow.style.fontWeight = "bold"; // Make the header row bold
+  // Append the category revenue table to the report container
+  reportContainer.appendChild(categoryRevenueTable);
+}
+
+
+
+ // Function to fetch daily report
+async function fetchDailyReport(selectedDate) {
+  try {
+    console.log("selectedDate",selectedDate)
+    // Construct the URL with the selected date
+    const url = `/admin/salesReport/salesReport/day/${selectedDate}`;
+    const response = await fetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+
+if (response.ok) {
+  const reportData = await response.json();
+  console.log("reportData",reportData)
+  displayDailyReportTable(reportData); // Call the function to display the table
+} else {
+  console.error("Error fetching daily report.");
+}
+
+
+  } catch (error) {
+    console.log("An error occurred while fetching the daily report:", error);
+  }
+}
+// Define the function to fetch a weekly report
+async function fetchWeeklyReport(weekStart, weekEnd) {
+  try{
+// Construct the URL with the extracted year and month
+    const url = `/admin/salesReport/salesReport/week/${weekStart}/${weekEnd}`;
+
+    const response = await fetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    
+    if (response.ok) {
+      const reportData = await response.json();
+      console.log(reportData)
+      displayDailyReportTable(reportData); // Call the function to display the table
+    } else {
+      console.error("Error fetching weekly report.");
+    }
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+  
+  } 
+  
+
+
+
+
+
+// Function to fetch and display a monthly report
+async function fetchMonthlyReport(selectedMonth) {
+  try {
+    // Construct the URL with the selected year and month
+    // Check if selectedMonth has a valid value
+    if (!selectedMonth) {
+      console.error("Invalid selectedMonth.");
+      return;
+    }
+
+// Split the selectedMonth string to separate the year and month
+    const [year, month] = selectedMonth.split("-");
+
+    // Construct the URL with the extracted year and month
+    const url = `/admin/salesReport/salesReport/month/${year}/${month}`;
+
+    const response = await fetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    
+    if (response.ok) {
+      const reportData = await response.json();
+      console.log(reportData)
+      displayDailyReportTable(reportData); // Call the function to display the table
+    } else {
+      console.error("Error fetching monthly report.");
+    }
+  } catch (error) {
+    console.log("An error occurred while fetching the monthly report:", error);
+  }
+}
+
+</script>
+  </body>
+
+</html>

@@ -1,0 +1,27 @@
+<div id="customers_table">
+  <div class="export__file">
+    <label
+      for="export-file"
+      class="export__file-btn"
+      title="Export File"
+    ></label>
+    <input type="checkbox" id="export-file" />
+    <div class="export__file-options">
+      <label>Export As &nbsp; &#10140;</label>
+      <label for="export-file" id="toPDF">PDF
+        <img
+          src="/Bootstrap/images/pdf.png"
+          style="width:30px;height:30px"
+          alt=""
+        /></label>
+
+    </div>
+  </div>
+  <h2>Invoice </h2>
+  {{{invoiceContent}}}
+  <!-- Rendered invoice HTML content goes here -->
+</div>
+
+<script src="/Bootstrap/custonJsFiles/pdf.js">
+
+</script>

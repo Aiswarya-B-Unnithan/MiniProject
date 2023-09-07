@@ -1,0 +1,53 @@
+{{>adminheader}}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    
+
+ 
+    <div class="container mt-5">    
+      <div class="row align-items-center">
+      <div class="col-6">
+        <h1 class="mb-4">View Coupons</h1>
+      </div>
+      <div class="col-6 text-right">
+    
+        <a href="/admin/addCoupon" class="btn btn-primary">Add New Coupon</a>
+      </div>
+    </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Coupon Code</th>
+            <th>Category</th>
+            <th>Discount Type</th>
+            <th>Discount Value</th>
+            <th>Valid From</th>
+            <th>Valid Until</th>
+            <th>Min Cart Amount</th>
+            {{!-- <th>Max Uses</th> --}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each coupons}}
+            <tr>
+              <td>{{this.code}}</td>
+              <td>{{this.category}}</td>
+              <td>{{this.discountType}}</td>
+              <td>{{this.discountValue}}</td>
+              <td>{{formatDate2 this.validFrom}}</td>
+              <td>{{formatDate2 this.validUntil}}</td>
+              <td>{{this.minCartAmount}}</td>
+              {{!-- <td>{{this.maxUses}}</td> --}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    ></script>
+  {{>adminfooter}}

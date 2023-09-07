@@ -1,0 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.logo img {
+  max-width: 100px;
+  height: auto;
+}
+
+.topbar {
+  background-color: #ddd;
+  padding: 5px;
+}
+
+.topbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.topbar li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.menu-area {
+  /* background-color: #f9f9f9; */
+  padding: 10px;
+}
+
+.menu-area ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-area li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.menu-area a {
+  color: #333;
+  text-decoration: none;
+}
+
+.menu-area a:hover {
+  color: #555;
+}
+
+/* Add more custom styles as needed */
+/* Make your layout responsive using media queries */
+@media (max-width: 768px) {
+  .logo img {
+    max-width: 80px;
+  }
+
+  .topbar li,
+  .menu-area li {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

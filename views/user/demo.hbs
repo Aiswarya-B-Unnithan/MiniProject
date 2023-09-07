@@ -1,0 +1,39 @@
+<link
+      rel="stylesheet"
+      type="text/css"
+      href="/Bootstrap/customCss/main.css"
+    />
+{{> userheader}}
+      <div class="product-field">
+        <div id="sortingButtons">
+    <button id="defaultSort">Default</button>
+    <button id="lowToHighSort">Low to High</button>
+    <button id="highToLowSort">High to Low</button>
+</div>
+        <ul class="items">
+          {{#each mainImages}}
+            <li data-category="" data-price="">
+              <picture>
+                <img src="/{{this}}" alt="" />
+              </picture>
+              <div class="detail">
+                <p class="icon" style="visibility:hidden">
+                  <span><i class="far fa-heart"></i></span>
+                  <span><i class="far fa-share-square"></i></span>
+                  <span><i class="fas fa-shopping-basket"></i></span>
+                </p>
+                {{#with (lookup ../products @index)}}
+               <p>{{productName}}</p>
+                <br>
+                <span>{{description}}</span>
+                <small>Buy now</small>
+              </div>
+              <br>
+              <h4>${{price}}</h4>
+              {{/with}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+   {{> userfooter}}
+<script type="text/javascript" src="/Bootstrap/custonJsFiles/main.js"></script>

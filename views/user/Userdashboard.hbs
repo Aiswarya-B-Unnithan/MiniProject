@@ -1,0 +1,286 @@
+{{> userheader}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<style>
+   .hidden {
+  display: none;
+}
+.flex-container {
+  display: flex;
+  justify-content: space-between; /* Align items to the start and end of the container */
+  align-items: center; /* Center vertically within the container */
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+
+.filter-dropdown {
+ display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+.green{
+  background-color: green;
+  color:white
+}
+.star-rating {
+  display: inline-block;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 1.5em; /* Adjust font size as needed */
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star-rating label:before {
+  content: '\2606'; /* Unicode character for an empty star */
+}
+
+
+
+.star-rating label.gold {
+  color: gold;
+}
+
+.fas {
+  color: gold; /* Gold color for solid stars */
+}
+
+.far {
+  color: gray; /* Gray color for outline stars */
+}
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }
+#sortingButtons button {
+  background-color: transparent; 
+  color: initial; 
+}
+#sortingButtons button:hover {
+  background-color: transparent; 
+  color: #007bff; 
+  
+}
+.stock-button{
+     background-color: transparent; 
+  color: #fff;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-left: 10px; /* Add some space between the buttons */
+  cursor: pointer;
+}
+#stock-button:hover {
+  background-color: transparent; /* Maintain transparency on hover */
+  color: #007bff; /* Highlight text color on hover (adjust the color as needed) */
+}
+</style>
+<h1 class="error" style="color:red;">{{message}}</h1>
+<link rel="stylesheet" href="/Bootstrap/customCss/dashbord.css" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+{{!-- <div id="sortingButtons">
+    <button id="lowToHighSort">Sort by Price: Low to High</button>
+    <button id="highToLowSort">Sort by Price: High to Low</button>
+</div>
+<div class="filter-dropdown">
+    <button id="stock-button" class="btn btn-primary mt-1">Filter by Stock</button>
+    <div class="dropdown-options hidden">
+        <div class="dropdown-option" data-value="all">All</div>
+        <div class="dropdown-option" data-value="Instock">In Stock</div>
+        <div class="dropdown-option" data-value="Out_of_Stock">Out of Stock</div>
+    </div>
+</div> --}}
+<div class="flex-container mt-5">
+  <div id="sortingButtons">
+    <button id="lowToHighSort">SORT BY PRICE: LOW TO HIGH</button>
+    <button id="highToLowSort">SORT BY PRICE: HIGH TO LOW</button>
+  </div>
+  <div class="filter-dropdown">
+    <button id="stock-button" class="btn">Filter by Stock</button>
+    <div class="dropdown-options hidden">
+      <div class="dropdown-option" data-value="all">All</div>
+      <div class="dropdown-option" data-value="Instock">In Stock</div>
+      <div class="dropdown-option" data-value="Out_of_Stock">Out of Stock</div>
+    </div>
+  </div>
+</div>
+
+<div class="album py-4 mt-4 bg-light">
+    <div class="container dashbord mt-5 mb-5 d-flex justify-content-center align-items-center">
+        <div class="row">
+            {{#each mainImages}}
+            <div class="col-md-4">
+                <div class="card mb-3 box-shadow {{stock}}">
+                    <div class="inner-card">
+                        <a href="#">
+                            <img src="/{{this}}" alt="" class="product-image" />
+                        </a>
+                        <div class="card-body">
+                            {{#with (lookup ../products @index)}}
+                            <div class="tag bg-red">{{stock}}</div>
+                            <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+                                <a href="/product/{{_id}}" class="proname">
+                                    <h4 class="card-title">{{productName}}</h4>
+                                </a>
+                                <div class="product-badge stockV  border-default text-body">{{stock}}</div>
+                                <form action="/wishlist/userWhishList" method="Post">
+                                   <input type="hidden" name="productId" value="{{_id}}">
+                                   <button type="submit" style="border:none"> <span class="heart"><i class="fa fa-heart"></i></span></button>
+                               
+                                </form>
+                            </div>
+                            <div class="mt-2 px-2">
+                                <small><p class="card-text">{{description}}</p></small>
+                                <small><p class="card-text">{{category.name}}</p></small>
+                                {{!-- Check if quantity is less than or equal to 13 --}}
+   {{#if (and (gt ItemStock 0) (lte ItemStock 5))}}
+    <p class="stock-message" style="font-weight:bolder;color:red">Hurry up, Only {{ItemStock}} left in stock</p>
+  {{else}}
+    <p class="stock-message">In Stock</p>
+  {{/if}}
+                            </div>
+                            <div class="px-2">
+    {{#if offerPrice}}
+        <h4 class="original-price">
+            <span class="original-price-cross" style="text-decoration: line-through;font-size: smaller;">₹{{price}}</span>
+        </h4>
+                <h1 class="offer-price" style="color: red; font-size: larger;">Now Only ₹{{offerPrice}}</h1>
+
+    {{else}}
+        <h3>₹{{price}}</h3>
+    {{/if}}
+</div>
+                            
+
+<div class="avg-rating">
+    {{#if avgRating}}
+       
+       <p>Average Rating: {{avgRating}}
+  <span class="average-rating">
+    {{{renderStars avgRating}}}
+  </span>
+</p>  
+    {{else}}
+        No ratings yet
+    {{/if}}
+</div>
+
+
+                            <div class="px-2 mt-3">
+                                <div class="px-2 mt-3">
+    <form action="/cart/{{_id}}">
+    {{#if offerPrice}}
+        <input type="hidden" name="offerPrice" value="{{offerPrice}}" />
+    {{/if}}
+    <input type="hidden" name="price" value="{{price}}" />
+    <input type="hidden" name="quantity" value="1" />
+    <button type="submit" class="btn btn-primary">ADD TO CART</button>
+</form>
+
+</div>
+
+                            </div>
+                            {{/with}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<script>
+   
+   document.addEventListener('DOMContentLoaded', function () {
+    const dropdownButton = document.getElementById("stock-button");
+    const dropdownOptions = document.querySelector(".dropdown-options");
+    const productContainer = document.querySelector(".row");
+    const cards = Array.from(document.querySelectorAll(".col-md-4"));
+
+    dropdownButton.addEventListener("click", function () {
+        dropdownOptions.classList.toggle("hidden");
+    });
+
+    dropdownOptions.addEventListener("click", function (event) {
+        if (event.target.classList.contains("dropdown-option")) {
+            const selectedValue = event.target.getAttribute("data-value");
+            dropdownButton.textContent = event.target.textContent;
+            dropdownOptions.classList.add("hidden");
+
+            filterProducts(selectedValue, cards);
+        }
+    });
+
+    function filterProducts(selectedStock, cards) {
+        const filteredProductIds = [];
+
+        cards.forEach(card => {
+            const stockClass = card.querySelector(".product-badge").textContent.trim().toLowerCase();
+            if (selectedStock === "all" || stockClass === selectedStock.toLowerCase()) {
+                card.style.display = "block";
+                filteredProductIds.push(card.dataset.productId); // Store the IDs of filtered products
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        productContainer.innerHTML = ""; // Clear existing content
+        renderFilteredProducts(filteredProductIds); // Call the rendering function
+    }
+
+    function renderFilteredProducts(filteredProductIds) {
+        filteredProductIds.forEach(productId => {
+            const productHTML = `
+                <div class="col-md-4">
+                    <!-- Render product data here -->
+                    <!-- Add more product details as needed -->
+                </div>
+            `;
+            productContainer.insertAdjacentHTML("beforeend", productHTML);
+        });
+    }
+});
+
+</script>
+<script src="/Bootstrap/custonJsFiles/sortingProducts.js"></script>
+<nav aria-label="...">
+  <ul class="pagination pagination-sm justify-content-center">
+    {{#for 1 totalPages 1}}
+    <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
+      <a class="page-link" href="/dashboard?page={{this}}">
+        {{this}}
+      </a>
+    </li>
+    {{/for}}
+  </ul>
+</nav>
+
+{{> userfooter}}

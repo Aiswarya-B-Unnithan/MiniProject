@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Category</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <style>
+      body { font-family: Arial, sans-serif; background-color: #f8f9fa; }
+      .container { max-width: 800px; margin: 0 auto; padding: 20px;
+      background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px; } h1 { text-align: center; margin-top: 20px;
+      margin-bottom: 30px; color: #333; } .form-label { font-weight: bold;
+      color: #333; } .form-control { border: 1px solid #ced4da; border-radius:
+      5px; padding: 10px; } .mb-5 { margin-bottom: 30px; } .mb-4 {
+      margin-bottom: 20px; } .btn-primary { background-color: #007bff; border:
+      none; } .btn-primary:hover { background-color: #0056b3; } .error { color:
+      red; }
+    </style>
+  </head>
+  <body>
+
+    <div class="container w-50 mt-4">
+      <p class="error" style="color:red">{{messageErr}}</p>
+      <h1>Add Category</h1>
+      <p class="error">{{error}}</p>
+      <form method="post" class="w-100" action="/admin/add-categories">
+        <div class="form-outline mb-5">
+          <label class="form-label" for="name">Category Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter category name"
+          />
+        </div>
+        <div class="form-outline mb-4">
+          <label for="description" class="form-label">Category Description:</label>
+          <textarea
+            id="description"
+            class="form-control"
+            name="description"
+            placeholder="Enter category description"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary mt-5" type="submit">Add Category</button>
+      </form>
+    </div>
+
+    {{! <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    ></script> }}
+  </body>
+</html>

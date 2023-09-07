@@ -1,0 +1,25 @@
+{{>userheader}}
+<div class="container mt-5">
+  <h1>Transaction History</h1>
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each transactionHistory}}
+      <tr>
+        <td>{{formatDate createdAt}}</td>
+        <td>{{this.type}}</td>
+        <td>{{description}}</td>
+        <td>{{amount}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{>userfooter}}

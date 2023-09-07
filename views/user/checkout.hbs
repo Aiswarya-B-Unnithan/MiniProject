@@ -1,0 +1,545 @@
+{{>userheader}}
+
+
+{{ log discountAmount}}
+<p>{{error}}</p>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <style>
+      body {
+        color: #69707a;
+      }
+
+      .img-account-profile {
+        height: 10rem;
+      }
+
+      .rounded-circle {
+        border-radius: 50% !important;
+      }
+
+      .card {
+        box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+      }
+
+      .card .card-header {
+        font-weight: 500;
+      }
+
+      .card-header:first-child {
+        border-radius: 0.35rem 0.35rem 0 0;
+      }
+
+      .card-header {
+        padding: 1rem 1.35rem;
+        margin-bottom: 0;
+        background-color: rgba(33, 40, 50, 0.03);
+        border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+      }
+
+      .form-control,
+      .dataTable-input {
+        display: block;
+        width: 100%;
+        padding: 0.875rem 1.125rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #69707a;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #c5ccd6;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.35rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+
+      .nav-borders .nav-link.active {
+        color: #0061f2;
+        border-bottom-color: #0061f2;
+      }
+
+      .nav-borders .nav-link {
+        color: #69707a;
+        border-bottom-width: 0.125rem;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+      /* Adjust the styling of the container */
+  .container-xl {
+   margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  /* Increase the height of the billing address card */
+  .card.mb-4 {
+    height: auto; /* Change this value as needed */
+  }
+
+  /* Center the Place Order button */
+  #order_button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+   .checkout-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .checkout-card {
+    height: auto;
+    /* Add more custom styles as needed */
+  }
+
+  .checkout-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .coupon-section {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+
+  .coupon-option label {
+    margin-left: 10px;
+  }
+    </style>
+
+    <div class="container-xl px-4 checkout-container" style="margin-top: 100px; margin-bottom: 100px;">
+      <hr class="mt-0 mb-4">
+      <div class="row">
+         <div class="col-xl-8">
+          <!-- Account details card-->
+          <div class="card mb-4 checkout-card">
+            <div class="card-header">Billing address</div>
+            <div class="card-body mb-3">
+              
+              <select id="selectedAddress" class="form-select form-select-lg mb-3 p-3"
+                aria-label=".form-select-lg example" onchange="takeAddressId(this)">
+               <option selected>Select an address</option> 
+                {{#each addresses}}
+                <option value="{{this._id}}">{{this.address1}}</option>
+                
+                
+                {{/each}}
+              </select>
+              <div class="card-body border pb-3 pt-2">
+                <button type="button" class="mt-2 btn " data-toggle="modal" data-target="#exampleModal">
+                  Add new Address +
+                </button>
+                {{log this._id }}
+<button id="editButton" class="btn">Edit</button>
+              </div>
+              {{!-- modal --}}
+              <!-- Button trigger modal -->
+              
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-10" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Address Form</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    {{!-- modal form --}}
+                    <div class="modal-body">
+                      <div class="container">
+                        <div class="row justify-content-center">
+                          <div class=" ">
+                            <div class="card login-form ">
+                              <div class="card-header bg-white border-0">
+                                <h3 class="text-center mb-0"></h3>
+                              </div>
+                              <div class="card-body ">
+                                <form action="/address/add-checkoutaddress" method="post">
+                                  <div class="form-group">
+                                    <label for="name">FirstName:</label>
+                                    <input type="text" class="form-control" id="fname" name="fname"
+                                      placeholder="Enter first name" required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="name">LastName:</label>
+                                    <input type="text" class="form-control" id="lname" name="lname"
+                                      placeholder="Enter last name" required>
+                                  </div>
+
+                               <div class="form-group">
+                                    <label for="name">Email:</label>
+                                    <input type="eamil" class="form-control" id="email" name="email"
+                                      placeholder="Enter Email" required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="mobile">Mobile:</label>
+                                    <input type="tel" class="form-control" id="mobile" name="mobile"
+                                      placeholder="Enter mobile" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="address">Address line1:</label>
+                                    <input type="text" class="form-control" id="address1" name="address1"
+                                      placeholder="Enter address" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="address">Address line2:</label>
+                                    <input type="text" class="form-control" id="address2" name="address2"
+                                      placeholder="Enter address">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input type="text" class="form-control" id="city" name="city"
+                                      placeholder="Enter city" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="state">State:</label>
+                                    <input type="text" class="form-control" id="state" name="state"
+                                      placeholder="Enter state" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="pin">Pin:</label>
+                                    <input type="text" class="form-control" id="pin" name="postalCode"
+                                      placeholder="Enter pin code" required>
+                                  </div>
+
+                                  <button type="submit" class="btn btn-primary btn-block mt-4">Submit</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+         
+
+</div>
+
+
+</div>
+     <!-- Edit Form -->
+  <form id="editForm" style="display: none;">
+    
+    <!-- Add a hidden input field to store the address ID -->
+    <input type="hidden" id="addressId" name="addressId" value="{{_id}}">
+      <div class="form-group">
+                                    <label for="name">FirstName:</label>
+                                    <input type="text" class="form-control" id="fName" name="fname"  required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="name">LastName:</label>
+                                    <input type="text" class="form-control" id="lName" name="lname"
+                                     required>
+                                  </div>
+
+                               <div class="form-group">
+                                    <label for="name">Email:</label>
+                                    <input type="eamil" class="form-control" id="Email" name="email"
+                                     required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="mobile">Mobile:</label>
+                                    <input type="tel" class="form-control" id="Mobile" name="mobile"
+                                   required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="address">Address line1:</label>
+                                    <input type="text" class="form-control" id="Address1" name="address1"
+                                     required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="address">Address line2:</label>
+                                    <input type="text" class="form-control" id="Address2" name="address2"
+                                     >
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input type="text" class="form-control" id="City" name="city"
+                                  required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="state">State:</label>
+                                    <input type="text" class="form-control" id="State" name="state"
+                                       required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="pin">Pin:</label>
+                                    <input type="text" class="form-control" id="PostalCode" name="PostalCode"
+                         required>
+                                  </div>
+                                  <div>
+      <button type="submit">Save</button>
+    </div>
+  </form>      
+          <div class="checkout-btn">
+            <button onclick="placeOrder()" class="btn btn-primary btn-lg"> Place Order</button>
+          </div>
+        </div>
+<div class="col-xl-4">
+  <!-- Profile picture card -->
+  <div class="card mb-4 mb-xl-0 checkout-card">
+    <h4 class="d-flex justify-content-between align-items-center mb-3 card-header">
+      
+      
+      <span class="badge badge-secondary badge-pill"></span>
+    </h4>
+    <ul class="list-group mb-3">
+      <!-- Cart items -->
+      {{#each cart.items}}
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">{{totalPrice}}</h6>
+        </div>
+        <span class="text-muted">{{this.quantity}} x ₹{{this.product.price}}</span>
+      </li>
+      {{/each}}
+
+      <!-- Coupon code -->
+      <li class="list-group-item d-flex justify-content-between bg-light">
+        <div class="text-success">
+          
+          
+          <span id="coupon_code">
+            <small></small>
+          </span>
+        </div>
+        <span id="discount_amt">
+          <span class="text-success"></span>
+        </span>
+      </li>
+
+      <!-- Total and Discounted Total -->
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <span id="new_sub_total">
+          <span id="total">₹{{totalAmountWithTax}}</span>
+        </span>
+        <input type="hidden" name="subTotal" value="{{totalAmountWithTax}}" id="subTotal">
+      </li>
+      
+    </ul>
+
+    <div class="card p-2">
+     
+      <div class="text-center m-2" style="color: red;" id="couponMsg"></div>
+      <p class="text-center m-2" style="color: green;" id="sCouponMsg"></p>
+
+      <!-- Available coupons -->
+ 
+ 
+      {{!-- <button onclick="calculateDiscountedTotal()" class="btn">Check</button> --}}
+<span id="discountedTotalDisplay"></span>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
+
+
+ 
+ 
+<script>
+  
+    let totalAmountWithTax = {{totalAmountWithTax}};
+    let selectedAddressId = null;
+    let selectedCoupon = '{{couponCode}}';
+    let CouponDiscountAmount = {{discountAmount}};
+    {{log selectedCoupon}}
+    {{log CouponDiscountAmount}}
+  let addressId=null
+    function takeAddressId(selectElement) {
+      selectedAddressId = selectElement.value;
+    }
+
+    function placeOrder() {
+      const confirmationUrl = `/address/confirmation?subTotal=${totalAmountWithTax}&addressId=${selectedAddressId}&selectedCoupon=${selectedCoupon}&CouponDiscountAmount=${CouponDiscountAmount}`;
+      window.location.href = confirmationUrl;
+    }
+  document.addEventListener('DOMContentLoaded', function() {
+     const selectElement = document.getElementById('selectedAddress');
+    selectElement.addEventListener('change', function() {
+      takeAddressId(this);
+    });
+    const placeOrderButton = document.getElementById('placeOrderButton');
+    placeOrderButton.addEventListener('click', function() {
+      placeOrder();
+    });
+  });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const selectElement = document.getElementById('selectedAddress');
+  console.log("selectElement",selectElement)
+  const editButtonContainer = document.querySelector('.card-body.mb-3');
+  const editForm = document.getElementById('editForm');
+
+  editButtonContainer.addEventListener('click', async function(event) {
+    if (event.target && event.target.id === 'editButton') {
+      const selectedAddressId = selectElement.value;
+      if (!selectedAddressId) {
+        // Show an alert or error message indicating no address is selected
+        return;
+      }
+
+      console.log('Selected Address ID:', selectedAddressId);
+
+      // Fetch address details based on selectedAddressId and populate the edit form
+      const address = await fetchAddressDetails(selectedAddressId);
+
+      if (address) {
+        console.log('Address:', address);
+        populateEditForm(address);
+        showEditForm();
+      } else {
+        console.log('Error fetching address details');
+      }
+    }
+  });
+
+editForm.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  // Collect edited address data from form fields
+  const editedAddress = {
+    fName: editForm.fname.value,
+    lName: editForm.lname.value,
+    email: editForm.email.value,
+    mobile: editForm.mobile.value,
+    address1: editForm.address1.value,
+    address2: editForm.address2.value,
+    city: editForm.city.value,
+    state: editForm.state.value,
+    postalCode: editForm.PostalCode.value
+  };
+console.log("editedAddress",editedAddress)
+console.log("selectedAddressIdd",selectedAddressId)
+// Send edited address data to the server using AJAX
+  try {
+    const response = await fetch(`/address/editaddress/${selectedAddressId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedAddress)
+    });
+
+    const data = await response.json();
+console.log("dataa",data)
+    if (data.success) {
+      // Address updated successfully
+      // You can show a success message, update the address in the UI, etc.
+    } else {
+      // Address update failed
+      // You can show an error message, handle the error, etc.
+    }
+  } catch (error) {
+    // Handle the error
+  }
+  // After successfully updating, close the edit form
+  editForm.style.display = 'none';
+  hideEditForm(); // Call the function to hide the edit form
+});
+});
+
+
+
+// Function to show the edit form
+function showEditForm() {
+  const editForm = document.getElementById('editForm');
+  editForm.style.display = 'block'; // Assuming you want to show it as a block element
+}
+
+// Function to hide the edit form
+function hideEditForm() {
+  const editForm = document.getElementById('editForm');
+  editForm.style.display = 'none';
+}
+function populateEditForm(address) {
+  const editForm = document.getElementById('editForm');
+  editForm.fname.value = address.fName;
+  editForm.lname.value = address.lName;
+  editForm.email.value = address.email;
+  editForm.mobile.value = address.mobile;
+  editForm.address1.value = address.address1;
+  editForm.address2.value = address.address2 || '';
+  editForm.city.value = address.city;
+  editForm.state.value = address.state;
+  editForm.PostalCode.value = address.postalCode;
+}
+
+
+
+
+
+
+     // Function to fetch address details based on address ID
+  async function fetchAddressDetails(addressId) {
+    try {
+      console.log("addressId",addressId)
+      const response = await fetch(`/address/getEditAddress/${addressId}`); 
+      
+      const data = await response.json();
+      console.log("data",data)
+      return data.address; // Assuming the API response contains an "address" property
+    } catch (error) {
+      console.error('Error fetching address details:', error);
+      return null;
+    }
+  }
+  function showEditForm() {
+    // Display the edit form in your HTML, you might need to adjust the logic based on your HTML structure
+    const editForm = document.getElementById('editForm');
+    editForm.style.display = 'block'; // Assuming you want to show it as a block element
+  }
+
+
+  
+</script>
+
+
+
+
+
+  {{>userfooter}}

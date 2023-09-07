@@ -1,0 +1,214 @@
+
+{{>userheader}}
+<style>
+  .red-status {
+    color: red;
+  }
+
+  .blue-status {
+    color: blue;
+  }
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .yellow-status {
+    color: yellow;
+  }
+
+  .green-status {
+    color: green;
+  }
+  .filter-section {
+    position: absolute;
+    width: 15%;
+    top: 39%; /* Adjust this value to vertically center the filter */
+    right: 20px; /* Adjust this value to control the distance from the right edge */
+    transform: translateY(-50%);
+    z-index: 1000;
+    background-color: white;
+    padding: 10px;
+    
+    
+  }
+  .hidden {
+  display: none;
+}
+.filter-dropdown {
+  position: absolute;
+  top: 40%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* Add any other styling you need */
+}
+
+
+</style>
+<link rel="stylesheet" href="/Bootstrap/customCss/conformedOrder.css">
+<!-- Breadcrumbs -->
+	
+  <!-- Breadcrumbs and Filter Button -->
+<div class="breadcrumbs d-flex align-items-center justify-content-between">
+  <ul class="bread-list">
+    <li class="active">
+     
+     <a class="nav-link active ms-0" href="/profile/viewProfile"><- BACK</a>
+    </li>
+  </ul>
+  <div class="filter-dropdown mt-1">
+    <button id="status-button" class="btn btn-dark mt-1">Filter by Status</button>
+    <div class="dropdown-options hidden">
+      <div class="dropdown-option" data-value="all">All</div>
+      <div class="dropdown-option" data-value="cancelled">Cancelled</div>
+      <div class="dropdown-option" data-value="confirmed">Confirmed</div>
+      <div class="dropdown-option" data-value="pending">Pending</div>
+      <div class="dropdown-option" data-value="delivered">Delivered</div>
+    </div>
+  </div>
+</div>
+
+	<!-- End Breadcrumbs -->
+
+
+<body class="body mt-1">
+
+
+  {{#if userOrders.length}}
+<div class="container mt-2 w-100">
+        <div class="d-flex justify-content-center row w-100">
+            <div class="col-md-10">
+                <div class="rounded">
+                    <div class="table-responsive table-borderless w-100">
+                        <table class="table table-dark table-striped-columns mt-4 order w-100" >
+                            <thead class="table-light"> 
+                                <tr>
+                                    
+                                    <th>Items</th>
+                                    <th>Total Price</th>
+                                    <th>Discounted Total</th>
+                                      <th>Status</th>
+          <th>Order Date</th>
+          <th>View Order</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body table-group-divider">
+                              {{#each userOrders}}
+                                <tr class="cell-1"> 
+                                    <td>
+      <ul>
+        {{#each this.cartItems}}
+          <li>
+            <img
+              src="/{{this.product.images.[0]}}"
+              alt="{{this.product.productName}}"
+             style="width: 100px;height:100px"
+            />
+            
+            <br />
+            - Quantity: {{this.quantity}}
+            <br />
+            - Price: ${{this.price}}
+          </li>
+        {{/each}}
+      </ul>
+    </td>
+                                    <td>${{this.totalPrice}}</td>
+    <td>${{discountedTotal}}</td>
+    <td class="{{statusColorClass this.status}} status">{{this.status}}</td>
+    <td>{{this.formattedOrderDate}}</td>
+    <td><a href="/order/detailedViewOrder/{{this._id}}">View</a>
+    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+  <p>No confirmed orders found.</p>
+{{/if}}
+    </body>
+    
+    <nav aria-label="...">
+          <ul class="pagination pagination-sm justify-content-center">
+            {{#for 1 totalPages 1}}
+            <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
+              <a class="page-link" href="/order/allOrders?page={{this}}">
+                {{this}}
+              </a>
+            </li>
+            {{/for}}
+          </ul>
+        </nav>
+       
+ 
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dropdownButton = document.getElementById("status-button");
+  const dropdownOptions = document.querySelector(".dropdown-options");
+
+  // Toggle the visibility of dropdown options
+  dropdownButton.addEventListener("click", function () {
+    dropdownOptions.classList.toggle("hidden");
+  });
+
+  // Set the selected option and close the dropdown
+  dropdownOptions.addEventListener("click", function (event) {
+    if (event.target.classList.contains("dropdown-option")) {
+      const selectedValue = event.target.getAttribute("data-value");
+      dropdownButton.textContent = event.target.textContent;
+      dropdownOptions.classList.add("hidden");
+
+      // Call your filtering function here based on the selected value
+      filterOrders(selectedValue);
+    }
+  });
+});
+
+function filterOrders(selectedStatus) {
+  const rows = document.querySelectorAll(".table-body tr"); // Select all rows in the table
+ let anyRowVisible = false;
+  rows.forEach((row) => {
+    const statusCell = row.querySelector(".status"); // Replace with the actual class of the status cell
+    
+    if (statusCell) {
+      const status = statusCell.textContent.trim();
+
+      if (selectedStatus === "all" || status === selectedStatus) {
+        row.style.display = "table-row"; // Show the row
+        anyRowVisible=true
+      } else {
+        row.style.display = "none"; // Hide the row
+      }
+    }
+  });
+  if (!anyRowVisible) {
+    showNoOrderAlert();
+  }
+}
+function showNoOrderAlert() {
+  Swal.fire({
+    icon: 'info',
+    title: 'No Orders Found',
+    text: 'There are no orders for the selected status.',
+  }).then(() => {
+  window.location.href = '/order/allOrders';
+})
+}
+
+</script>
+
+  {{>userfooter}}

@@ -1,0 +1,147 @@
+<html>
+
+  <head>
+    <title>SignUp Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); },
+      false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- Custom Theme files -->
+    <link rel="stylesheet" href="/Bootstrap/customCss/signup.css" />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css"
+    />
+    <!-- //web font -->
+
+  </head>
+  <h3 class="error" style="text-align:center">{{messageErr}}</h3>
+  <body>
+    <!-- main -->
+    <div class="main-w3layouts wrapper">
+      <h1>Register Here</h1>
+      <div class="main-agileinfo">
+        <div class="agileits-top">
+
+          <form id="form" action="/signup" method="post">
+            <input
+              class="text"
+              type="text"
+              id="name"
+              name="username"
+              placeholder="Username"
+              required=""
+            />
+            <div><span
+                style="color: rgb(206, 41, 41);"
+                id="nameError"
+                class="error"
+              ></span></div>
+            <input
+              class="text email"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email Address"
+              required=""
+            />
+            <div><span
+                style="color: rgb(240, 49, 49);"
+                id="emailError"
+                class="error"
+              ></span></div>
+            <input
+              class="text pt-5"
+              type="text"
+              id="mobile"
+              name="mobile"
+              placeholder="Mobile Number"
+              required=""
+            />
+            <div><span
+                style="color: rgb(246, 46, 46);"
+                id="phoneError"
+                class="error"
+              ></span></div>
+            <br />
+
+            <input
+              class="text"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create Password"
+              required=""
+            />
+            <div><span
+                style="color: rgb(238, 60, 60);"
+                id="passwordError"
+                class="error"
+              ></span></div>
+            <input
+              class="text w3lpass"
+              type="password"
+              id="password1"
+              name="password1"
+              placeholder="Confirm Password"
+              required=""
+            />
+            <div><span
+                style="color: rgb(246, 70, 70);"
+                id="confirmPasswordError"
+                class="error"
+              ></span></div>
+            <br />
+
+            <!-- Add this input field within your <form> element -->
+            <input
+              type="text"
+              name="referralCode"
+              id="referralCode"
+              placeholder="Referral Code"
+            />
+
+            <div>
+              <p style="color: red;">{{message1}}</p>
+            </div>
+            <div>
+              <p style="color: green;">{{message2}}</p>
+            </div>
+            <input id="registerButton" type="submit" value="SIGNUP" />
+            {{! </form> }}
+          </form>
+          <p>Don't have an Account? <a href="/login"> Login Now!</a></p>
+        </div>
+      </div>
+
+      <!-- //copyright -->
+      <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <!-- //main -->
+
+  </body>
+
+  <script src="/Bootstrap/custonJsFiles/userSignUpValidation.js">
+
+  </script>
+
+</html>

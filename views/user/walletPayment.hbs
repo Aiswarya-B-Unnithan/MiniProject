@@ -1,0 +1,30 @@
+{{> userheader}}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Wallet Payment</h4>
+          
+          <p class="card-text">Your current wallet balance: ${{userWalletAmount}}</p>
+          
+          <form action="/wallet/walletPayment" method="post">
+            <div class="form-group">
+              <label for="amount">Payment Amount:</label>
+              <input type="number" class="form-control" id="amount" name="amount" min="{{cartTotal}}" max="{{cartTotal}}" value='{{cartTotal}}'>
+            </div>
+            <input type="hidden" name='totalAmount' value="{{totalAmount}}">
+            <input type="hidden" name="paymentMethod" value="{{paymentMethod}}">
+             <input type="hidden" name="cartTotal" value="{{cartTotal}}">
+                          <input type="hidden" name="couponDiscountAmount" value="{{couponDiscountAmount}}">
+
+            <button type="submit" class="btn btn-primary">Make Payment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> userfooter}}

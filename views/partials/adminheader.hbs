@@ -1,0 +1,230 @@
+<html lang="zxx">
+  <head>
+    <!-- Meta Tag -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="copyright" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Title Tag  -->
+    <title>Eshop - eCommerce Website</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/Bootstrap/images/favicon.png" />
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
+    <!-- StyleSheet -->
+
+    <link rel="stylesheet" href="/Bootstrap/style.css" />
+
+    <link rel="stylesheet" href="/Bootstrap/css/bootstrap.css" />
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="/Bootstrap/css/magnific-popup.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/Bootstrap/css/font-awesome.css" />
+    <!-- Fancybox -->
+    <link rel="stylesheet" href="/Bootstrap/css/jquery.fancybox.min.css" />
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="/Bootstrap/css/themify-icons.css" />
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="/Bootstrap/css/niceselect.css" />
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="/Bootstrap/css/animate.css" />
+    <!-- Flex Slider CSS -->
+    <link rel="stylesheet" href="/Bootstrap/css/flex-slider.min.css" />
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="/Bootstrap/css/owl-carousel.css" />
+    <!-- Slicknav -->
+    <link rel="stylesheet" href="/Bootstrap/css/slicknav.min.css" />
+
+    <!-- Eshop StyleSheet -->
+    <link rel="stylesheet" href="/Bootstrap/css/reset.css" />
+
+    <link rel="stylesheet" href="/Bootstrap/css/responsive.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    {{! <link rel="stylesheet" href="/Bootstrap/customStyle.css"> }}
+  </head>
+  <body class="js">
+<!-- Preloader -->
+<div class="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-icon">
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+<!-- End Preloader -->
+
+<!-- Header -->
+<header class="header shop">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 col-12" style="visibility:hidden">
+          <!-- Top Left -->
+          <div class="top-left">
+            <ul class="list-main">
+              <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
+              <li><i class="ti-email"></i> supportt@caseu.com</li>
+            </ul>
+          </div>
+          <!--/ End Top Left -->
+        </div>
+        <div class="col-lg-8 col-md-12 col-12">
+          <!-- Top Right -->
+          <div class="right-content">
+            <ul class="list-main">
+              <li style="visibility:hidden"><i class="ti-location-pin"></i> Store location</li>
+              <li style="visibility:hidden">
+                <i class="ti-alarm-clock"></i>
+                <a href="#">Daily deal</a>
+              </li>
+
+              <li><i class="ti-user"></i>
+                <a href="#">{{#if admin}}
+                    {{admin}}
+                  {{else}}
+                    Account
+                  {{/if}}
+                </a></li>
+              <li>
+                {{#if admin}}
+                  <i class="ti-power-off"></i><a href="/admin/logout">LogOut</a>
+                {{else}}
+                  <i class="ti-power-off"></i><a href="/admin/login">Login</a>
+                {{/if}}
+
+              </li>
+            </ul>
+          </div>
+          <!-- End Top Right -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Topbar -->
+  <div class="middle-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-12">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="/admin/dashBoard"><img
+                src="/Bootstrap/images/logo.png"
+                alt="logo"
+              /></a>
+          </div>
+          <!--/ End Logo -->
+          <!-- Search Form -->
+          <div class="search-top">
+            <div class="top-search">
+              <a href="#0"><i class="ti-search"></i></a>
+            </div>
+            <!-- Search Form -->
+            <div class="search-top">
+              <form class="search-form">
+                <input type="text" placeholder="Search here..." name="search" />
+                <button value="search" type="submit">
+                  <i class="ti-search"></i>
+                </button>
+              </form>
+            </div>
+            <!--/ End Search Form -->
+          </div>
+          <!--/ End Search Form -->
+          <div class="mobile-nav"></div>
+        </div>
+
+        
+              <!--/ End Shopping Item -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Header Inner -->
+  <div class="header-inner">
+    <div class="container">
+      <div class="cat-nav-head">
+        <div class="row">
+          <div class="col-lg-3">
+
+          </div>
+          <div class="col-lg-12 col-12">
+            <div class="menu-area">
+              <!-- Main Menu -->
+              <nav class="navbar navbar-expand-lg">
+                <div class="navbar-collapse">
+                  <div class="nav-inner">
+                    <ul class="nav main-menu menu navbar-nav">
+                      
+                      <li><a href="/admin/users">User Management</a></li>
+                      <li><a href="/admin/products">Product Management</a></li>
+
+                      <li><a href="/admin/categories">Category Management</a></li>
+<li><a href="/admin/UserOrders/allOrders">Order Management</a></li>
+<li><a href="/admin/viewCoupon">Coupon Management</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+              <!--/ End Main Menu -->
+              <!--till here every page common-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ End Header Inner -->
+</header>
+<!--/ End Header -->
+<!-- Jquery -->
+<script src="/Bootstrap/js/jquery.min.js"></script>
+<script src="/Bootstrap/js/jquery-migrate-3.0.0.js"></script>
+<script src="/Bootstrap/js/jquery-ui.min.js"></script>
+<!-- Popper JS -->
+<script src="/Bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/Bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Slicknav JS -->
+<script src="/Bootstrap/js/slicknav.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="/Bootstrap/js/owl-carousel.js"></script>
+<!-- Magnific Popup JS -->
+<script src="/Bootstrap/js/magnific-popup.js"></script>
+<!-- Waypoints JS -->
+<script src="/Bootstrap/js/waypoints.min.js"></script>
+<!-- Countdown JS -->
+<script src="/Bootstrap/js/finalcountdown.min.js"></script>
+<!-- Nice Select JS -->
+<script src="/Bootstrap/js/nicesellect.js"></script>
+<!-- Flex Slider JS -->
+<script src="/Bootstrap/js/flex-slider.js"></script>
+<!-- ScrollUp JS -->
+<script src="/Bootstrap/js/scrollup.js"></script>
+<!-- Onepage Nav JS -->
+<script src="/Bootstrap/js/onepage-nav.min.js"></script>
+<!-- Easing JS -->
+<script src="/Bootstrap/js/easing.js"></script>
+<!-- Active JS -->
+<script src="/Bootstrap/js/active.js"></script>

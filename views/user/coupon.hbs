@@ -1,0 +1,62 @@
+
+
+{{>userheader}}
+
+  <style>
+    /* Add your custom styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .coupon-list {
+      list-style: none;
+      padding: 0;
+    }
+    .coupon-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .coupon-item strong {
+      display: inline-block;
+      width: 150px;
+    }
+    .coupon-item span {
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
+
+  <div class="container">
+    <h1 class="mb-4">Available Coupons</h1>
+    <ul class="coupon-list">
+      {{#each coupons}}
+        <li class="coupon-item">
+          <strong>Coupon Code:</strong> {{this.code}}
+          <span><strong>Applicable Category:</strong> {{this.category}}</span>
+          <span><strong>Discount Type:</strong> {{this.discountType}}</span>
+          <span><strong>Discount Value:</strong> {{this.discountValue}}</span>
+          <span><strong>Valid From:</strong> {{this.validFromFormatted}}</span>
+          <span><strong>Valid Until:</strong> {{this.validFromFormatted}}</span>
+          {{!-- <span><strong>Max Uses:</strong> {{this.maxUses}}</span> --}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+  {{!-- <script>
+    function formatDate(date) {
+      return moment(date).format('DD-MM');
+    }
+  </script> --}}
+
+{{> userfooter}}

@@ -1,0 +1,40 @@
+{{#if error}}
+  <p class="error">{{error}}</p>
+{{/if}}
+
+<div class="album py-4 mt-4 bg-light">
+  <div class="container">
+    <div class="row">
+      {{#each mainImages}}
+        <div class="col-md-3 auto">
+          <div class="card mb-3 box-shadow" style="width: 18rem;">
+            
+            <a href="#">
+              <img src="/{{this}}" alt="" style="width: 18rem;height:200px" />
+            </a>
+           
+            <div class="card-body">
+              {{!-- Get the current product from products array --}}
+              {{#with (lookup ../products @index)}}
+              <a href="/product/{{_id}}">
+                <h5 class="card-title">{{productName}}</h5>
+                <p class="card-text">{{description}}</p>
+                <p class="card-text">{{category.name}}</p>
+                <p class="card-text">{{price}}</p>
+                <p class="card-text">{{stock}}</p>
+                <span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+                </a>
+                <a href="#" class="btn btn-primary">ADD TO CART</a>
+              {{/with}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+

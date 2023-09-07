@@ -1,0 +1,33 @@
+<h1>Add Product</h1>
+<form
+  id="productForm"
+  method="POST"
+  action="/admin/add-product"
+  enctype="multipart/form-data"
+>
+  <label for="name">Product Name:</label>
+  <input type="text" id="name" name="name" required />
+  <br />
+  <label for="price">Price:</label>
+  <input type="text" id="price" name="price" required />
+  <br />
+  <label for="description">Product Description:</label>
+  <textarea id="description" name="description"></textarea>
+  <br />
+  <label for="category">Category:</label>
+  <select id="category" name="category" required>
+    <option value="" disabled selected>Select a category</option>
+    {{#each categories}}
+      <option value="{{this._id}}">{{this.name}}</option>
+    {{/each}}
+  </select>
+  <br />
+
+  <label for="images">Product Images:</label>
+  <input type="file" id="images" name="images[]" multiple required />
+
+  <div id="image-preview-container">hi</div>
+  <br />
+
+  <button type="submit">Add Product</button>
+</form>

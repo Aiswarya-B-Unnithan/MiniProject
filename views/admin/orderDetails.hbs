@@ -1,0 +1,48 @@
+{{>adminheader}}
+<!-- views/admin/orderDetails.hbs -->
+<h1 style="text-align:center" class="mt-5">ORDER DETAILS</h1>
+<!-- Display messages here -->
+<div class="mt-4">
+<p style="text-align: center; color: red;" class="mt-4">{{message}}</p>
+</div>
+
+<!-- Form to update order status -->
+<div class="container w-50 h-50">
+<form action="/admin/UserOrders/{{order._id}}/updateStatus" method="POST">
+<label for="orderId">Order Id</label>
+<input type="text" name="order_id" id="orderId" class="form-control"  value="{{order.customOrderID}}" disabled>
+<br>
+<label for="orderId">Order Date</label>
+<input type="text" name="order_id" id="order_date" class="form-control" value="{{formatDate2 order.orderDate}}" disabled>
+<br>
+{{#if order.deliveryDate}}
+<label for="orderId">Delivered Date</label>
+<input type="text" name="order_id" id="order_ddate" class="form-control" value="{{formatDate order.deliveryDate}}" disabled>
+<br>
+{{/if}}
+{{#if order.adminOrderCancelDate}}
+<label for="orderId">Cancel Date</label>
+<input type="text" name="order_id" id="order_canceldate" class="form-control" value="{{formatDate order.adminOrderCancelDate}}" disabled>
+<br>
+{{/if}}
+<label for="orderId">Customer Name</label>
+<input type="text" name="order_id" id="order_id" class="form-control" value="{{order.user.username}}" disabled>
+<br>
+<br>
+<label for="orderId">Total Amount</label>
+<input type="text" name="order_id" id="order_id" class="form-control" value="{{order.totalPrice}}" disabled>
+<br>
+  <label for="status"></label>
+  <select name="status" id="status">
+    <option value="pending" {{#if (eq order.status "pending")}}selected{{/if}}>Pending</option>
+    <option value="confirmed" {{#if (eq order.status "confirmed")}}selected{{/if}}>Confirmed</option>
+    <option value="cancelled" {{#if (eq order.status "cancelled")}}selected{{/if}}>Cancelled</option>
+    <option value="delivered" {{#if (eq order.status "delivered")}}selected{{/if}}>Delivered</option>
+    <option value="returned" {{#if (eq order.status "returned")}}selected{{/if}}>Returned</option>
+  </select>
+  <br>
+  <br>
+  <button type="submit" class="btn btn-danger">Update Status</button>
+</form>
+</div>
+{{>adminfooter}}

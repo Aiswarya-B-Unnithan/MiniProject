@@ -1,0 +1,61 @@
+<!-- productManagement.hbs -->
+{{>adminheader}}
+
+
+<link rel="stylesheet" href="/Bootstrap/customCss/productManagement.css">
+<div class="body">
+    <main class="table">
+        <section class="table__header">
+            <h1>Product Management</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="/Bootstrap/images/search.png" alt="">
+            </div>
+            
+            <a href="/admin/add-product" class="mt-5 btn">Add New Product</a>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th> Product Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Price <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Description <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Category <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Images <span class="icon-arrow">&UpArrow;</span></th>
+                        <th colspan="2"> Actions <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {{#each products}}
+                    <tr>
+                        <td>{{this.customID}}</td>
+                        <td>{{this.productName}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.description}}</td>
+                        <td>{{this.category.name}}</td>
+                         <td>
+            {{#each this.images}}
+              <img
+                src="/{{this}}"
+                style="width: 100px;height:100px"
+                alt="Product Image"
+              />
+            {{/each}}
+
+          </td>
+                        <td><button class="btn btn-primary"><a
+                href="/admin/update-Product/{{_id}}"
+              >UPDATE</a></button></td>
+          <td><button class="btn btn-danger"><a
+                href="/admin/delete-Product/{{_id}}"
+              >DELETE</a></button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div><script src="/Bootstrap/custonJsFiles/productManagement.js"></script>
+{{>adminfooter}}

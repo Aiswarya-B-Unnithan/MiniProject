@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+    />
+  </head>
+  {{log referralCode}}
+  <body>
+    <div class="h-screen bg-gray-500 py-80 px-3">
+      <div class="container mx-auto">
+        <div class="max-w-sm mx-auto md:max-w-lg">
+          <div class="w-full">
+            <div class="bg-white h-64 py-3 rounded text-center">
+              <h1 class="text-2xl font-bold">OTP Verification</h1>
+              <div class="flex flex-col mt-4">
+                <span>Enter the OTP you received </span>
+
+              </div>
+
+              <div
+                id="otp"
+                class="flex flex-row justify-center text-center px-2 mt-5"
+              >
+                <form method="post" action="/otp-verification" class="mt-4">
+                  <input
+                    type="hidden"
+                    name="referralCode"
+                    value="{{referralCode}}"
+                  />
+                  <input
+                    type="email"
+                    class="form-control border-5"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="otp"
+                    class="form-control"
+                    placeholder="OTP"
+                    required
+                  />
+                  <button class="btn" type="submit">Verify</button>
+
+                </form>
+              </div>
+
+              <div class="flex justify-center text-center mt-5">
+                <form action="/resend-otp" method="post">
+                  <input type="hidden" name="email" value="{{user.email}}" />
+                  <button type="submit" class="btn btn-light">Resend OTP</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+{{log availableCategories}}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Offer Management</title>
+    <style>
+      /* Reset some default styles */ body, h1, h2, h3, h4, h5, h6, p, ul, li {
+      margin: 0; padding: 0; } body { font-family: Arial, sans-serif;
+      background-color: #f7f7f7; } .admin-header { background-color: #333;
+      color: #fff; padding: 1rem; display: flex; justify-content: space-between;
+      align-items: center; } .admin-header h1 { font-size: 1.5rem; }
+      .admin-content { padding: 2rem; } .offer-form { border: 1px solid #ccc;
+      padding: 1rem; margin-bottom: 2rem; background-color: #fff; } .offer-form
+      label, .offer-form input, .offer-form select, .offer-form button {
+      display: block; margin-bottom: 1rem; } .offer-list ul { list-style: none;
+      } .offer-list li { border: 1px solid #ccc; padding: 1rem; margin-bottom:
+      1rem; background-color: #fff; display: flex; justify-content:
+      space-between; align-items: center; } .offer-list .category { font-weight:
+      bold; } .delete-offer { background-color: #e74c3c; color: #fff; border:
+      none; padding: 0.5rem 1rem; cursor: pointer; }
+
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <h1>OFFER MANAGEMENT</h1>
+      <!-- Navigation links -->
+    </header>
+    <main class="admin-content">
+      <h2>Offer Management</h2>
+      <div class="offer-form">
+        <h3>Create New Offer</h3>
+        <form action="/admin/add-offer" method="POST">
+          <label for="offername"></label>
+          <input
+            type="text"
+            name="offername"
+            id="offername"
+            placeholder="Offer Name"
+          />
+          <label for="category">Select Category:</label>
+
+          <select name="category" id="category">
+            {{#each availableCategories}}
+              <option value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+
+          <label for="percentage">Offer Percentage:</label>
+          <input
+            type="number"
+            name="percentage"
+            id="percentage"
+            min="0"
+            max="100"
+            required
+          />
+          <button type="submit">Create Offer</button>
+        </form>
+      </div>
+      <div class="offer-list">
+        <h3>Current Offers</h3>
+        <ul>
+          {{#each availableOffers}}
+            <li>
+              <span class="category">{{this.category}}</span>
+              <span class="percentage">{{this.discountPercentage}}</span>
+              <button class="delete-offer">Delete</button>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>
