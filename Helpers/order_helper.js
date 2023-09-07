@@ -361,7 +361,7 @@ module.exports = {
       );
 
       // Send the PDF buffer as a response
-      res.send(pdfBuffer);
+      res.status(200).send(pdfBuffer);
     } catch (err) {
       console.error("Error:", err);
       res.status(500).send("An error occurred", err);
