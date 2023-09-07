@@ -360,7 +360,6 @@ module.exports = {
         `attachment; filename=invoice_${customOrderID}.pdf`
       );
 
-      // Send the PDF buffer as a response
       res.status(200).send(pdfBuffer);
     } catch (err) {
       console.error("Error:", err);
