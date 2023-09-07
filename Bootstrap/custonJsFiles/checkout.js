@@ -43,6 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function () {
       const addressId = selectAddressId;
       const editAddressForm = document.getElementById("editAddressForm");
-      editAddressForm.action = `http://localhost:3000/address/editaddress/${addressId}`;
+      editAddressForm.action = `/address/editaddress/${addressId}`;
     });
 });
