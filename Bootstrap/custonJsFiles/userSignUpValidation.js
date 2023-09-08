@@ -4,13 +4,13 @@ const emailInput = form.elements.email;
 const phoneInput = form.elements.mobile;
 const passwordInput = form.elements.password;
 const confirmPasswordInput = form.elements.password1;
-const referralCode = refCodeInput.value.trim(); 
+const referralCode = form.elements.referralCode.value.trim();
 const nameError = document.getElementById("nameError");
 const emailError = document.getElementById("emailError");
 const phoneError = document.getElementById("phoneError");
 const passwordError = document.getElementById("passwordError");
 const confirmPasswordError = document.getElementById("confirmPasswordError");
-
+console.log(passwordInput);
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -48,6 +48,8 @@ form.addEventListener("submit", function (event) {
   passwordError.textContent = "";
 
   // Validate confirm password
+  console.log("passwordInput.value", passwordInput.value);
+  console.log("confirmPasswordInput.value", confirmPasswordInput.value);
   if (passwordInput.value !== confirmPasswordInput.value) {
     confirmPasswordError.textContent = "Passwords  not match...!";
     return;
@@ -57,4 +59,3 @@ form.addEventListener("submit", function (event) {
   // All validation passed
   form.submit();
 });
-
