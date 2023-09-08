@@ -140,8 +140,8 @@ module.exports = {
       const addressId = req.params.id;
 
       const address = await addressCollection.findById(addressId).lean();
-      console.log("address", address);
-      res.render("user/editaddress", { userData, address });
+      // console.log("address", address);
+      res.render("user/editAddress", { userData, address });
     } catch (error) {
       console.log(error.message);
     }
