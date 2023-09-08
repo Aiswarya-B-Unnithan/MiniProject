@@ -304,11 +304,13 @@ module.exports = {
     res.render("user/orderSuccessPage");
   },
   submitOrder: async (req, res) => {
+    const user = req.session.user;
     const discountedTotal = req.query.discountedTotal;
     const paymentMethod = req.query.paymentMethod;
     const CouponDiscountAmount = req.query.CouponDiscountAmount;
     res.render("user/submitOrderForm", {
       discountedTotal,
+      user,
       paymentMethod,
       CouponDiscountAmount,
     });
