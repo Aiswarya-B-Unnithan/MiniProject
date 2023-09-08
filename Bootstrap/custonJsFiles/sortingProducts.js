@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const lowToHighSortButton = document.getElementById("lowToHighSort");
   const highToLowSortButton = document.getElementById("highToLowSort");
   const productsContainer = document.querySelector(".album .row");
-
+  console.log("productsContainer", productsContainer);
   lowToHighSortButton.addEventListener("click", function () {
     sortProducts(true);
   });
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sortProducts(ascending) {
     const productCards = Array.from(
-      productsContainer.querySelectorAll(".col-md-4")
+      productsContainer.querySelectorAll(".col-sm")
     );
 
     const sortedProductCards = productCards.slice().sort((a, b) => {

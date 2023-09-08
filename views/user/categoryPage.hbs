@@ -1,5 +1,9 @@
 {{> userheader}}
-<p class="error">{{message}}</p>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 <style>
    .hidden {
   display: none;
@@ -10,10 +14,16 @@
   align-items: center; /* Center vertically within the container */
   margin-bottom: 20px; /* Adjust the value as needed */
 }
+
+
 .filter-dropdown {
  display: flex;
   justify-content: flex-end;
   margin-bottom: 20px; /* Adjust the value as needed */
+}
+.green{
+  background-color: green;
+  color:white
 }
 .star-rating {
   display: inline-block;
@@ -36,6 +46,7 @@
 
 
 
+
 .star-rating label.gold {
   color: gold;
 }
@@ -48,11 +59,8 @@
   color: gray; /* Gray color for outline stars */
 }
 
-
-.green{
-  background-color: green;
-  color:white
-}
+  
+  
 #sortingButtons button {
   background-color: transparent; 
   color: initial; 
@@ -64,7 +72,7 @@
 }
 .stock-button{
      background-color: transparent; 
-      color: #fff;
+  color: #fff;
   border: none;
   padding: 5px 15px;
   border-radius: 4px;
@@ -77,7 +85,61 @@
 }
 </style>
 
+{{!-- TESTING STYLES --}}
 
+<style>
+  ul {
+  list-style-type: none;
+  margin-left:37%;
+padding:0;
+}
+
+.rating{
+  margin-left:37%;
+}
+
+.page{
+  background-color:#dfe6e0;
+padding:2%;
+margin: auto;
+}
+
+.fa{
+  color:#f2dd1d;
+}
+
+.card-img-top{
+width:90%;
+height:225px;
+}
+
+.view{
+  background-color:#dfe6e0;
+  padding:10px;
+  margin:20px;
+}
+
+.card{
+  width:95%;
+  padding:0px;
+  margin-left: 2%;
+}
+
+.card-footer{
+  background-color: #ff772e;
+  font-weight: 700;
+}
+
+.price{
+color:#ff4517;
+  font-weight: 600;
+
+}
+</style>
+
+{{!-- TESTING STYLES END--}}
+
+<h1 class="error" style="color:red;">{{message}}</h1>
 <link rel="stylesheet" href="/Bootstrap/customCss/dashbord.css" />
 <link
   rel="stylesheet"
@@ -95,12 +157,22 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
-<div>
 
-<div class="flex-container mt-5">
-  <div id="sortingButtons">
-    <button id="lowToHighSort">SORT BY PRICE: LOW TO HIGH</button>
-    <button id="highToLowSort">SORT BY PRICE: HIGH TO LOW</button>
+<div class="container">
+<nav class="navbar navbar-expand-md navbar-light bg-white">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand text-uppercase fw-800" href="#"><span
+                        class="border-red pe-2"></span>Products</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav2"
+                    aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fas fa-bars"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="myNav2">
+                    <div class="navbar-nav ms-auto">
+                        <div id="sortingButtons">
+    <button id="lowToHighSort" class="nav-link">LOW TO HIGH</button>
+    <button id="highToLowSort">HIGH TO LOW</button>
   </div>
   <div class="filter-dropdown">
     <button id="stock-button" class="btn">Filter by Stock</button>
@@ -110,56 +182,70 @@
       <div class="dropdown-option" data-value="Out_of_Stock">Out of Stock</div>
     </div>
   </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </nav>
 </div>
-<div class="album py-4 mt-4 bg-light">
-    <div class="container dashbord mt-5 mb-5 d-flex justify-content-center align-items-center">
-        <div class="row">
-            {{#each mainImages}}
-            <div class="col-md-4">
-                <div class="card mb-3 box-shadow {{stock}}">
-                    <div class="inner-card">
-                        <a href="#">
-                            <img src="/{{this}}" alt="" class="product-image" />
-                        </a>
-                        <div class="card-body">
-                            {{#with (lookup ../products @index)}}
-                            <div class="tag bg-red">{{stock}}</div>
-                            <div class="d-flex justify-content-between align-items-center mt-3 px-2">
-                                <a href="/product/{{_id}}" class="proname">
-                                    <h4 class="card-title">{{productName}}</h4>
-                                </a>
-                                <div class="product-badge stockV  border-default text-body">{{stock}}</div>
-                                <form action="/wishlist/userWhishList" method="Post">
-                                   <input type="hidden" name="productId" value="{{_id}}">
-                                   <button type="submit" style="border:none"> <span class="heart"><i class="fa fa-heart"></i></span></button>
-                               
-                                </form>
-                            </div>
-                            <div class="mt-2 px-2">
-                                <small><p class="card-text">{{description}}</p></small>
-                                <small><p class="card-text">{{category.name}}</p></small>
-                                {{!-- Check if quantity is less than or equal to 13 --}}
-   {{#if (and (gt ItemStock 0) (lte ItemStock 5))}}
-    <p class="stock-message" style="font-weight:bolder;color:red">Hurry up, Only {{ItemStock}} left in stock</p>
-  {{else}}
-    <p class="stock-message">In Stock</p>
-  {{/if}}
-                            </div>
-                            
-                            <div class="px-2">
-    {{#if offerPrice}}
+
+{{!-- TESTING --}}
+
+
+
+<!--For Page-->
+<div class="album page py-4 mt-4 bg-light">
+
+	<!--For Row containing all card-->
+	<div class="row">
+		<!--Card 1-->
+    {{#each mainImages}}
+		<div class="col-sm">
+			<div class="card card-cascade card-ecommerce wider shadow mb-5 ">
+
+				<!--Card image-->
+				<div class="view view-cascade overlay text-center">
+					<img class="card-img-top" src="/{{this}}"
+      alt="" >
+					<a>
+						<div class="mask rgba-white-slight"></div>
+					</a>
+				</div>
+
+
+				<!--Card Body-->
+       
+				<div class="card-body card-body-cascade text-center">
+ {{#with (lookup ../products @index)}}
+					<!--Card Title-->
+<h4 class="card-title" style="text-decoration:none">
+    <strong><a href="/product/{{_id}}">{{productName}}</a></strong>
+    <form action="/wishlist/userWhishList" method="Post" style="display: inline-block;">
+        <input type="hidden" name="productId" value="{{_id}}">
+        <button type="submit" style="border:none:background-color:transparent"> <span class="heart" style="background-color:transparent"><i class="fa fa-heart"></i></span></button>
+    </form>
+</h4>
+
+          <h6 class="card-text product-badge stockV"><strong>{{stock}}</strong></h6>
+					<!-- Card Description-->
+          
+					<p class="card-text">{{description}}
+					</p>
+
+
+            {{#if offerPrice}}
         <h4 class="original-price">
-            <span class="original-price-cross" style="text-decoration: line-through;font-size: smaller;">₹{{price}}</span>
+            <span class="original-price-cross price" style="text-decoration: line-through;font-size: smaller;">₹{{price}}</span>
         </h4>
-                <h1 class="offer-price" style="color: red; font-size: larger;">Now Only ₹{{offerPrice}}</h1>
+                <h1 class="offer-price price" style="color: red; font-size: larger;">Now Only ₹{{offerPrice}}</h1>
 
     {{else}}
         <h3>₹{{price}}</h3>
     {{/if}}
-</div>
-                            
-                            <div class="avg-rating">
-    {{#if avgRating}}
+					
+          {{#if avgRating}}
        
        <p>Average Rating: {{avgRating}}
   <span class="average-rating">
@@ -169,44 +255,41 @@
     {{else}}
         No ratings yet
     {{/if}}
-</div>
-                            <div class="px-2 mt-3">
-                                <form action="/cart/{{_id}}">
-                                    <input type="hidden" name="price" value="{{price}}" />
-                                    <input type="hidden" name="quantity" value="1" />
-                                    <button type="submit" class="btn btn-primary">ADD TO CART</button>
-                                </form>
-                            </div>
-                            {{/with}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-    </div>
-</div>
+
+					<!--Card footer-->
+					<div class="card-footer">
+            <form action="/cart/{{_id}}">
+            {{#if offerPrice}}
+               <input type="hidden" name="offerPrice" value="{{offerPrice}}" />
+              {{/if}}
+                <input type="hidden" name="price" value="{{price}}" />
+               <input type="hidden" name="quantity" value="1" />
+					<button type="submit" style="border:none;background-color:transparent"><p>ADD TO CART</p></button>	
+            </form>
+            
+					</div>
+          {{/with}}
+				</div>
+			</div>
+		</div>
+     {{/each}}
+	</div>
 </div>
 
 
-<nav aria-label="...">
-  <ul class="pagination pagination-sm justify-content-center">
-    {{#for 1 totalPages 1}}
-      <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
-        <a class="page-link" href="?page={{this}}">
-          {{this}}
-        </a>
-      </li>
-    {{/for}}
-  </ul>
-</nav>
+<script src="/Bootstrap/custonJsFiles/sortingProducts1.js"></script>
+
+
+
+{{!-- END TESTING --}}
+
 <script>
    
    document.addEventListener('DOMContentLoaded', function () {
     const dropdownButton = document.getElementById("stock-button");
     const dropdownOptions = document.querySelector(".dropdown-options");
     const productContainer = document.querySelector(".row");
-    const cards = Array.from(document.querySelectorAll(".col-md-4"));
+    const cards = Array.from(document.querySelectorAll(".col-sm"));
 
     dropdownButton.addEventListener("click", function () {
         dropdownOptions.classList.toggle("hidden");
@@ -226,20 +309,24 @@
         const filteredProductIds = [];
 
         cards.forEach(card => {
+          console.log("card",card.dataset.productId)
             const stockClass = card.querySelector(".product-badge").textContent.trim().toLowerCase();
             if (selectedStock === "all" || stockClass === selectedStock.toLowerCase()) {
                 card.style.display = "block";
-                filteredProductIds.push(card.dataset.productId); // Store the IDs of filtered products
+                 console.log("cardd",card.dataset.productId)
+                filteredProductIds.push(card.dataset.productId); 
             } else {
                 card.style.display = "none";
             }
         });
 
-        productContainer.innerHTML = ""; // Clear existing content
-        renderFilteredProducts(filteredProductIds); // Call the rendering function
+        productContainer.innerHTML = ""; 
+        console.log(productContainer)
+        renderFilteredProducts(filteredProductIds); 
     }
 
     function renderFilteredProducts(filteredProductIds) {
+      console.log("filteredProductIds",filteredProductIds)
         filteredProductIds.forEach(productId => {
             const productHTML = `
                 <div class="col-md-4">
@@ -247,13 +334,29 @@
                     <!-- Add more product details as needed -->
                 </div>
             `;
+            console.log("productHTML")
             productContainer.insertAdjacentHTML("beforeend", productHTML);
+            console.log(productContainer)
         });
     }
 });
 
 </script>
-<script src="/Bootstrap/custonJsFiles/sortingProducts.js"></script>
+
+
+<nav aria-label="...">
+  <ul class="pagination pagination-sm justify-content-center">
+    {{#for 1 totalPages 1}}
+      <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
+        <a class="page-link" href="?page={{this}}">
+          {{this}}
+        </a>
+      </li>
+    {{/for}}
+  </ul>
+</nav>
+
+
 <script>
 $(document).ready(function () {
   $(".pagination a.page-link").click(function (event) {
