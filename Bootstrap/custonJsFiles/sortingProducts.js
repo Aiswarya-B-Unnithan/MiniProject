@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const highToLowSortButton = document.getElementById("highToLowSort");
   const productsContainer = document.querySelector(".album .row");
   console.log("productsContainer", productsContainer);
+
   lowToHighSortButton.addEventListener("click", function () {
     sortProducts(true);
   });
@@ -17,16 +18,29 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     const sortedProductCards = productCards.slice().sort((a, b) => {
-      const aPriceElement =
-        a.querySelector(".px-2 .original-price-cross") ||
-        a.querySelector(".px-2 h3");
-      const bPriceElement =
-        b.querySelector(".px-2 .original-price-cross") ||
-        b.querySelector(".px-2 h3");
+      const aPriceElement = a.querySelector(".offer-price.price");
+      const bPriceElement = b.querySelector(".offer-price.price");
+      const aRegularPriceElement = a.querySelector("h3");
+      const bRegularPriceElement = b.querySelector("h3");
 
-      const aPrice = parseFloat(aPriceElement.textContent.replace("₹", ""));
+      let aPrice, bPrice;
 
-      const bPrice = parseFloat(bPriceElement.textContent.replace("₹", ""));
+      if (aPriceElement && bPriceElement) {
+        aPrice = parseFloat(
+          aPriceElement.textContent.replace("Now Only ₹", "")
+        );
+        bPrice = parseFloat(
+          bPriceElement.textContent.replace("Now Only ₹", "")
+        );
+      } else {
+        // Check if regular price elements exist, otherwise set to a default value
+        aPrice = aRegularPriceElement
+          ? parseFloat(aRegularPriceElement.textContent.replace("₹", ""))
+          : 0;
+        bPrice = bRegularPriceElement
+          ? parseFloat(bRegularPriceElement.textContent.replace("₹", ""))
+          : 0;
+      }
 
       if (ascending) {
         return aPrice - bPrice;
