@@ -4,7 +4,9 @@ const walletTransactionCollection = require("../models/walletTransactionModel");
 
 module.exports = {
   getpayment: async (req, res) => {
-    const userWalletAmount = req.session.user.wallet;
+    const user = req.session.user;
+    let userWalletAmount = req.session.user.wallet;
+    const walletErr = req.session.user.walletErr;
     const discountedTotal = req.query.discountedTotal;
     const paymentMethod = req.query.paymentMethod;
     const cartTotal = req.query.cartTotal;
@@ -17,6 +19,8 @@ module.exports = {
       userWalletAmount,
       paymentMethod,
       couponDiscountAmount,
+      walletErr,
+      user,
     });
   },
   submitPayment: async (req, res) => {
@@ -51,6 +55,9 @@ module.exports = {
       res.redirect(
         `/order/submitOrder?discountedTotal=${cartTotal}&paymentMethod=${paymentMethod}&CouponDiscountAmount=${CouponDiscountAmount}`
       );
+    } else {
+      req.session.user.walletErr = "No Enough Balance To pay";
+      res.redirect("/wallet/walletPayment");
     }
   },
   getWalletTranscationHistory: async (req, res) => {

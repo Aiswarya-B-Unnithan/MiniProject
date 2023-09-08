@@ -1,18 +1,16 @@
 {{> userheader}}
 
 <div class="container mt-5">
-  <div class="row">
+  <h5 style="text-align:center;justify-content:center;color:rgb(192, 55, 55);font-style:italic">{{walletErr}}</h5>
+  <div class="row mt-3 mb-5">
     <div class="col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Wallet Payment</h4>
-          
           <p class="card-text">Your current wallet balance: ${{userWalletAmount}}</p>
-          
           <form action="/wallet/walletPayment" method="post">
             <div class="form-group">
               <label for="amount">Payment Amount:</label>
-              <input type="number" class="form-control" id="amount" name="amount" min="{{cartTotal}}" max="{{cartTotal}}" value='{{cartTotal}}'>
+              <input type="number" class="form-control" id="amount" name="amount" min="{{cartTotal}}" max="{{cartTotal}}" value="{{cartTotal}}">
             </div>
             <input type="hidden" name='totalAmount' value="{{totalAmount}}">
             <input type="hidden" name="paymentMethod" value="{{paymentMethod}}">
@@ -21,6 +19,7 @@
 
             <button type="submit" class="btn btn-primary">Make Payment</button>
           </form>
+          <a href="/cart">Back To Cart</a>
         </div>
       </div>
     </div>
