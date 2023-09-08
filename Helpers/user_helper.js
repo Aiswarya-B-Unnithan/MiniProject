@@ -255,33 +255,33 @@ module.exports = {
           // Handle invalid referral code here
         }
       }
+
+      // Create a wallet transaction record for the referring user
+      if (referringUser) {
+        const referringUserId = referringUser._id;
+        const walletTransactionReferringUser = new WalletTransactionCollection({
+          user: referringUserId,
+          type: "credit",
+          amount: 500,
+          description: "Referral Bonus",
+        });
+        // Save the wallet transaction record for the referring user
+        await walletTransactionReferringUser.save();
+        // Create a wallet transaction record for the newly created user
+        const newlyUserId = newlyUser._id;
+        const walletTransactionNewlyUser = new WalletTransactionCollection({
+          user: newlyUserId,
+
+          type: "credit",
+          amount: 100,
+          description: "Initial Wallet Bonus",
+        });
+        // Save the wallet transaction record for the newly created user
+        await walletTransactionNewlyUser.save();
+      }
+
+      await res.render("user/login");
     });
-
-    // Create a wallet transaction record for the referring user
-    if (referringUser) {
-      const referringUserId = referringUser._id;
-      const walletTransactionReferringUser = new WalletTransactionCollection({
-        user: referringUserId,
-        type: "credit",
-        amount: 500,
-        description: "Referral Bonus",
-      });
-      // Save the wallet transaction record for the referring user
-      await walletTransactionReferringUser.save();
-      // Create a wallet transaction record for the newly created user
-      const newlyUserId = newlyUser._id;
-      const walletTransactionNewlyUser = new WalletTransactionCollection({
-        user: newlyUserId,
-
-        type: "credit",
-        amount: 100,
-        description: "Initial Wallet Bonus",
-      });
-      // Save the wallet transaction record for the newly created user
-      await walletTransactionNewlyUser.save();
-    }
-
-    res.render("user/login");
   },
   userLogin: async (req, res) => {
     const user = req.session.user;
