@@ -209,7 +209,8 @@ module.exports = {
 
   addCheckOutAddress: async (req, res) => {
     const userId = req.session.user._id;
-    console.log(req.body);
+    const totalAmountWithTax = req.body.totalAmountWithTax;
+    console.log("req.body", req.body);
     const {
       fname,
       lname,
@@ -234,7 +235,7 @@ module.exports = {
       postalCode: postalCode,
     });
     await newCheckOutAddress.save();
-    res.redirect("/address/checkout");
+    res.redirect(`/address/checkout?totalAmountWithTax=${totalAmountWithTax}`);
   },
   fetchAddress: async (req, res) => {
     try {
@@ -305,12 +306,12 @@ module.exports = {
   saveEditedAddress: async (req, res) => {
     try {
       const addressid = req.params.id;
-      console.log("Line150addressid", addressid);
+      // console.log("Line150addressid", addressid);
       const id = req.session.user._id;
       const userData = await User.findById(id);
       const addressData = await addressCollection.findById(addressid);
-      console.log("addressData", addressData);
-      console.log("req.body", req.body);
+      // console.log("addressData", addressData);
+      // console.log("req.body", req.body);
       const {
         fName,
         lName,
@@ -335,7 +336,8 @@ module.exports = {
 
       // Save the changes
       await addressData.save();
-      res.redirect("/address/checkout");
+      await res.send(JSON.stringify(addressData));
+      // res.redirect("/address/checkout");
     } catch (error) {
       console.log(error);
     }

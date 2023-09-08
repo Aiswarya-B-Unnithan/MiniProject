@@ -129,6 +129,7 @@
     margin-left: 10px;
   }
     </style>
+<div id="errorMessage" style="color: red;"></div>
 
     <div class="container-xl px-4 checkout-container" style="margin-top: 100px; margin-bottom: 100px;">
       <hr class="mt-0 mb-4">
@@ -186,7 +187,7 @@
                                     <input type="text" class="form-control" id="fname" name="fname"
                                       placeholder="Enter first name" required>
                                   </div>
-
+<input type="hidden" name="totalAmountWithTax" value="{{totalAmountWithTax}}">
                                   <div class="form-group">
                                     <label for="name">LastName:</label>
                                     <input type="text" class="form-control" id="lname" name="lname"
@@ -304,7 +305,7 @@
                          required>
                                   </div>
                                   <div>
-      <button type="submit">Save</button>
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </form>      
           <div class="checkout-btn">
@@ -374,13 +375,9 @@
 
   
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 
-
-
- 
- 
 <script>
   
     let totalAmountWithTax = {{totalAmountWithTax}};
@@ -395,8 +392,15 @@
     }
 
     function placeOrder() {
-      const confirmationUrl = `/address/confirmation?subTotal=${totalAmountWithTax}&addressId=${selectedAddressId}&selectedCoupon=${selectedCoupon}&CouponDiscountAmount=${CouponDiscountAmount}`;
+      if(selectedAddressId==null)
+      {
+        alert("Select A Address Before Proceeding")
+      }
+      else{
+const confirmationUrl = `/address/confirmation?subTotal=${totalAmountWithTax}&addressId=${selectedAddressId}&selectedCoupon=${selectedCoupon}&CouponDiscountAmount=${CouponDiscountAmount}`;
       window.location.href = confirmationUrl;
+      }
+      
     }
   document.addEventListener('DOMContentLoaded', function() {
      const selectElement = document.getElementById('selectedAddress');
@@ -453,8 +457,8 @@ editForm.addEventListener('submit', async function(event) {
     state: editForm.state.value,
     postalCode: editForm.PostalCode.value
   };
-console.log("editedAddress",editedAddress)
-console.log("selectedAddressIdd",selectedAddressId)
+{{!-- console.log("editedAddress",editedAddress)
+console.log("selectedAddressIdd",selectedAddressId) --}}
 // Send edited address data to the server using AJAX
   try {
     const response = await fetch(`/address/editaddress/${selectedAddressId}`, {
@@ -464,18 +468,15 @@ console.log("selectedAddressIdd",selectedAddressId)
       },
       body: JSON.stringify(editedAddress)
     });
-
-    const data = await response.json();
-console.log("dataa",data)
-    if (data.success) {
-      // Address updated successfully
-      // You can show a success message, update the address in the UI, etc.
-    } else {
-      // Address update failed
-      // You can show an error message, handle the error, etc.
-    }
+     if (response.ok) {
+      alert('Updated.');
+  } 
+  else{
+          alert('Something went wrong. Please try again.');
+  }
   } catch (error) {
-    // Handle the error
+    
+    console.log(error)
   }
   // After successfully updating, close the edit form
   editForm.style.display = 'none';
@@ -509,12 +510,7 @@ function populateEditForm(address) {
   editForm.PostalCode.value = address.postalCode;
 }
 
-
-
-
-
-
-     // Function to fetch address details based on address ID
+ // Function to fetch address details based on address ID
   async function fetchAddressDetails(addressId) {
     try {
       console.log("addressId",addressId)
@@ -534,12 +530,6 @@ function populateEditForm(address) {
     editForm.style.display = 'block'; // Assuming you want to show it as a block element
   }
 
-
-  
 </script>
-
-
-
-
 
   {{>userfooter}}
